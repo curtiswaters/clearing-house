@@ -23,4 +23,9 @@ return [
   // domain. contact_to_email is where messages actually get delivered.
   'contact_to_email'   => 'info@dominatewithbrand.com',
   'contact_from_email' => 'noreply@yourdomain.com',
+
+  // Password for /admin/ (editing listings). Generate a hash with:
+  //   php -r "echo password_hash('your-password-here', PASSWORD_DEFAULT), \"\n\";"
+  // Never put the plain-text password here — only the hash.
+  'admin_password_hash' => '$2y$10$replace.this.with.a.real.hash.generated.above',
 ];

@@ -21,6 +21,8 @@ Contact: Curtis Waters · info@dominatewithbrand.com · (704) 345-2964
   Composer/SDK needed.
 - `sql/` — `schema.sql` (creates the `businesses` table) and `seed.php` (one-time
   import of the original listing data).
+- `admin/` — password-protected panel (`admin/index.php`) for adding, editing,
+  deleting, and featuring/unfeaturing listings without touching SQL directly.
 
 ## Running locally
 
@@ -70,6 +72,13 @@ of one-time setup steps are required in addition to uploading files.
    `noreply@yourdomain.com`, created in cPanel → Email Accounts). Most mail
    servers reject or spam-flag mail whose From address isn't on the sending
    domain, so this needs to match your domain, not `info@dominatewithbrand.com`.
+8. **Set the admin password**: generate a hash for your chosen password with
+   `php -r "echo password_hash('your-password-here', PASSWORD_DEFAULT), \"\n\";"`
+   and put the result in `api/config.php` as `admin_password_hash` (the
+   plain-text password itself never goes in the file). Make sure the site
+   has HTTPS (cPanel's AutoSSL is usually one click) before using `/admin/`,
+   since the login form has no other protection against the password being
+   read off the network.
 
 No `.htaccess` rewrite rules are needed for routing — the site uses
 hash-based client-side routing (`#/`, `#/category/...`, etc.), so every route
@@ -108,11 +117,18 @@ basic spam filtering and strips newlines from user input before it reaches
 any email header, to prevent header injection. See the Deploying steps above
 for the one required config value (`contact_from_email`).
 
+## Admin panel
+
+`/admin/` is a small password-protected panel (single PHP file, no JS
+framework) for listing management: add, edit, delete, and toggle Featured
+directly, without writing SQL. It's protected by one shared password
+(`admin_password_hash` in `api/config.php`) plus a CSRF token on every write
+and a short delay after repeated failed logins — reasonable for a single
+site owner, but not meant for multiple admin users or a public-facing login
+at scale.
+
 ## Known limitations to address before going live
 
-- **Listing data editing**: adding/editing/removing listings currently
-  requires direct SQL (e.g. via phpMyAdmin). A small admin page would let
-  this happen without touching the database directly.
 - **Subscription lifecycle**: cancellations, failed renewal payments, or
   chargebacks aren't handled — the webhook only reacts to
   `checkout.session.completed`. Un-featuring a business when its
