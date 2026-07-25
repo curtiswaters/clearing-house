@@ -385,24 +385,20 @@ const DEFAULT_BUSINESSES = [
 ];
 
 /* ---------------------------------------------------------
-   STORAGE — shared across all visitors (demo dataset)
+   DATA — loaded from the PHP/MySQL API, shared across all visitors
 --------------------------------------------------------- */
 let businesses = [];
-const STORAGE_KEY = "directory-businesses-v1";
 
 async function loadData(){
   try{
-    const res = await window.storage.get(STORAGE_KEY, true);
-    businesses = JSON.parse(res.value);
+    const res = await fetch("api/listings.php");
+    if(!res.ok) throw new Error("listings request failed");
+    businesses = await res.json();
   }catch(e){
+    console.warn("Could not load listings from the API, showing built-in fallback data.", e);
     businesses = DEFAULT_BUSINESSES.map(b => ({...b, featured:false}));
-    try{ await window.storage.set(STORAGE_KEY, JSON.stringify(businesses), true); }catch(e2){ /* ignore */ }
   }
   render();
-}
-
-async function persist(){
-  try{ await window.storage.set(STORAGE_KEY, JSON.stringify(businesses), true); }catch(e){ /* ignore */ }
 }
 
 /* ---------------------------------------------------------
@@ -840,7 +836,16 @@ async function submitFeatureForm(e){
   btn.disabled = true;
   await new Promise(r => setTimeout(r, 900)); // simulate network/Stripe round-trip
   const b = businesses.find(x=>x.id===id);
-  if(b){ b.featured = true; await persist(); }
+  if(b){
+    try{
+      const res = await fetch("api/feature.php", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({id})
+      });
+      if(res.ok) b.featured = true;
+    }catch(e){ console.warn("Could not save featured status.", e); }
+  }
   const name = b ? b.name : "";
   document.getElementById("modalContent").innerHTML = `
     <div class="success-box">
