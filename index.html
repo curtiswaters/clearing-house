@@ -115,6 +115,13 @@
   }
   .search-drawer button:hover{ background: var(--navy); }
 
+  .trust-row{
+    display:flex; flex-wrap:wrap; gap:8px 22px; margin-top:22px;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft);
+  }
+  .trust-row span{ display:flex; align-items:center; gap:6px; }
+  .trust-row span::before{ content:'✓'; color:var(--sage); font-weight:700; }
+
   /* category tiles */
   .tiles{ max-width:1120px; margin: 36px auto 0; padding: 0 24px; display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
   @media (max-width: 760px){ .tiles{ grid-template-columns:1fr; } }
@@ -283,7 +290,7 @@
       <div class="logo-mark">CH</div>
       <div class="logo-text">
         <div class="name">The Clearing House</div>
-        <div class="tag">Charlotte, NC directory</div>
+        <div class="tag">Charlotte Metro directory</div>
       </div>
     </div>
     <nav class="cats" id="topnav"></nav>
@@ -517,6 +524,11 @@ function renderHome(){
         <input id="searchInput" type="text" placeholder="Search by name, city, or service…" autocomplete="off">
         <button type="submit">Search</button>
       </form>
+      <div class="trust-row">
+        <span>Charlotte Metro — including Rock Hill &amp; York County, SC</span>
+        <span>Organized by service type, not ad spend</span>
+        <span>Direct phone numbers — call today, no lead forms</span>
+      </div>
     </div>
     <div class="tiles">${tiles}</div>
 
@@ -536,10 +548,12 @@ function renderHome(){
 function renderCategory(slug){
   const cat = CATEGORIES[slug];
   if(!cat) return renderHome();
-  const list = sortForDisplay(businesses.filter(b=>b.category===slug));
+  const inCategory = businesses.filter(b=>b.category===slug);
+  const list = sortForDisplay(inCategory);
+  const featured = list.filter(b=>b.featured);
   return `
     <div class="hero" style="padding-bottom:8px;">
-      <div class="eyebrow">${businesses.filter(b=>b.category===slug).length} businesses</div>
+      <div class="eyebrow">${inCategory.length} businesses</div>
       <h1>${cat.label}</h1>
       <p class="sub">${cat.blurb}</p>
       <form class="search-drawer" onsubmit="return handleSearchSubmit(event)">
@@ -547,7 +561,13 @@ function renderCategory(slug){
         <button type="submit">Search</button>
       </form>
     </div>
-    <div class="section-head"><h2>${cat.short}</h2><div class="meta">sorted: featured first</div></div>
+
+    ${featured.length ? `
+    <div class="section-head"><h2>Featured</h2><div class="meta">sponsored placement</div></div>
+    <div class="grid">${featured.map(cardHtml).join("")}</div>
+    ` : ``}
+
+    <div class="section-head"><h2>All ${cat.short}</h2><div class="meta">${inCategory.length} businesses</div></div>
     <div class="grid">${list.length ? list.map(cardHtml).join("") : `<div class="empty">No listings yet in this category.</div>`}</div>
   `;
 }
