@@ -14,8 +14,10 @@ Contact: Curtis Waters · info@dominatewithbrand.com · (704) 345-2964
   `#/listing/...`, `#/about`, `#/contact`, `#/faq`, `#/privacy`).
 - `hero_estatedir1.webp` — the homepage hero image. Must stay in the same folder
   as `index.html` (referenced by a relative path).
-- `api/` — PHP endpoints backing the listing data (`listings.php`, `feature.php`,
-  `db.php`, `config.example.php`). Requires PHP + MySQL, e.g. a cPanel hosting plan.
+- `api/` — PHP endpoints backing the listing data and payments
+  (`listings.php`, `create-checkout-session.php`, `stripe-webhook.php`,
+  `db.php`, `config.example.php`). Requires PHP + MySQL, e.g. a cPanel
+  hosting plan. Talks to Stripe directly over cURL — no Composer/SDK needed.
 - `sql/` — `schema.sql` (creates the `businesses` table) and `seed.php` (one-time
   import of the original listing data).
 
@@ -56,6 +58,12 @@ of one-time setup steps are required in addition to uploading files.
    safe — it skips rows that already exist.
 5. Once seeded, consider moving or deleting `sql/seed.php` so it isn't left
    reachable on the live site indefinitely.
+6. **Configure Stripe**: add your Stripe secret key to `api/config.php`
+   (`stripe_secret_key`, test-mode `sk_test_...` to start). In the Stripe
+   Dashboard → Developers → Webhooks, add an endpoint pointing at
+   `https://yourdomain.com/api/stripe-webhook.php`, subscribed to the
+   `checkout.session.completed` event, then copy its signing secret into
+   `api/config.php` as `stripe_webhook_secret`.
 
 No `.htaccess` rewrite rules are needed for routing — the site uses
 hash-based client-side routing (`#/`, `#/category/...`, etc.), so every route
@@ -63,28 +71,39 @@ resolves to the same `index.html`.
 
 ## Data persistence
 
-Listing data, including which businesses are "Featured", is now stored in
-MySQL and served through `api/listings.php`, so it persists across visitors
-and reloads — this replaces the old `window.storage` approach (which only
-ever worked inside a Claude.ai artifact).
+Listing data, including which businesses are "Featured", is stored in MySQL
+and served through `api/listings.php`, so it persists across visitors and
+reloads — this replaces the old `window.storage` approach (which only ever
+worked inside a Claude.ai artifact).
 
-One gap remains: `api/feature.php`, which the "Get Featured" checkout calls
-to mark a listing featured, has **no payment verification** — it's a stopgap
-that trusts any request it receives. It exists only so Featured status has
-somewhere real to persist while the payment flow is still mocked. See the
-Payments item below; once real Stripe billing is wired up, `feature.php`
-should be removed and featured status should only ever be set from a
-verified Stripe webhook.
+## Payments
+
+The "Get Featured" flow uses real Stripe Checkout: clicking "Continue to
+secure checkout" calls `api/create-checkout-session.php`, which creates a
+$30/mo subscription Checkout Session via Stripe's REST API and redirects the
+browser to Stripe's own hosted payment page — card details are never
+collected on this site. After a successful payment, Stripe calls
+`api/stripe-webhook.php`, which verifies the request actually came from
+Stripe (via signature check) before setting `featured = 1` for that
+business. The browser is then returned to the site with a confirmation
+message, though the DB update happens independently via the webhook, so
+there can be a short (usually sub-second) delay before the listing shows as
+Featured on reload.
+
+Both endpoints call Stripe's API directly over cURL rather than the official
+`stripe-php` SDK, so no Composer install is required on the server.
 
 ## Known limitations to address before going live
 
-- **Payments**: the "Get Featured" checkout is a simulated Stripe flow for
-  demo purposes — no real charge is processed, and `api/feature.php` (which
-  it calls) has no payment verification. Wiring up real $30/mo billing
-  requires Stripe Checkout Sessions plus a webhook that sets `featured = 1`
-  only after a verified successful payment.
 - **Contact form**: submits via `mailto:`, opening the visitor's own email
   client. It does not send email directly from a server.
 - **Listing data editing**: adding/editing/removing listings currently
   requires direct SQL (e.g. via phpMyAdmin). A small admin page would let
   this happen without touching the database directly.
+- **Subscription lifecycle**: cancellations, failed renewal payments, or
+  chargebacks aren't handled — the webhook only reacts to
+  `checkout.session.completed`. Un-featuring a business when its
+  subscription lapses would need additional webhook events (e.g.
+  `customer.subscription.deleted`, `invoice.payment_failed`) and a way to
+  match a subscription back to a business (e.g. storing the Stripe
+  subscription ID on the row when it's first created).

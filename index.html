@@ -804,23 +804,9 @@ function openFeatureModal(id){
         <label class="field">Business</label>
         <select class="stripe-input" id="featureBusinessSelect" style="font-family:'Inter',sans-serif;">${options}</select>
       </div>
-      <div class="field-group">
-        <label class="field">Card number</label>
-        <input class="stripe-input" placeholder="4242 4242 4242 4242" required maxlength="19" id="cardNumber">
-      </div>
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field">Expiry</label>
-          <input class="stripe-input" placeholder="MM / YY" required maxlength="7">
-        </div>
-        <div class="field-group">
-          <label class="field">CVC</label>
-          <input class="stripe-input" placeholder="123" required maxlength="4">
-        </div>
-      </div>
-      <button type="submit" class="btn brass" style="width:100%; margin-top:6px;">Subscribe — $30/mo</button>
+      <button type="submit" class="btn brass" style="width:100%; margin-top:6px;">Continue to secure checkout</button>
     </form>
-    <div class="stripe-badge">🔒 Payments simulated for this demo — no real charge is made</div>
+    <div class="stripe-badge">🔒 Payment is handled by Stripe — card details are entered on Stripe's own page, never on this site.</div>
   `;
   overlay.classList.add("open");
 }
@@ -832,29 +818,23 @@ async function submitFeatureForm(e){
   const select = document.getElementById("featureBusinessSelect");
   const id = select.value;
   const btn = e.target.querySelector("button[type=submit]");
-  btn.textContent = "Processing…";
+  btn.textContent = "Redirecting to Stripe…";
   btn.disabled = true;
-  await new Promise(r => setTimeout(r, 900)); // simulate network/Stripe round-trip
-  const b = businesses.find(x=>x.id===id);
-  if(b){
-    try{
-      const res = await fetch("api/feature.php", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({id})
-      });
-      if(res.ok) b.featured = true;
-    }catch(e){ console.warn("Could not save featured status.", e); }
+  try{
+    const res = await fetch("api/create-checkout-session.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({id})
+    });
+    const data = await res.json();
+    if(!res.ok || !data.url) throw new Error(data.error || "Could not start checkout");
+    window.location.href = data.url;
+  }catch(err){
+    console.warn("Could not start checkout.", err);
+    btn.textContent = "Continue to secure checkout";
+    btn.disabled = false;
+    alert("Something went wrong starting checkout. Please try again.");
   }
-  const name = b ? b.name : "";
-  document.getElementById("modalContent").innerHTML = `
-    <div class="success-box">
-      <div class="mark">✓</div>
-      <h3>You're featured</h3>
-      <p class="lead">${escapeHtml(name)} now appears at the top of the homepage and its category page.</p>
-      <button class="btn" style="width:100%;" onclick="closeFeatureModal(); render();">Done</button>
-    </div>
-  `;
   return false;
 }
 document.getElementById("modalOverlay").addEventListener("click", (e)=>{
@@ -862,9 +842,36 @@ document.getElementById("modalOverlay").addEventListener("click", (e)=>{
 });
 
 /* ---------------------------------------------------------
+   CHECKOUT RETURN — Stripe redirects back here after success/cancel
+--------------------------------------------------------- */
+function handleCheckoutReturn(){
+  const params = new URLSearchParams(window.location.search);
+  const status = params.get("checkout");
+  if(status){
+    if(status === "success"){
+      const b = businesses.find(x=>x.id===params.get("business"));
+      const name = b ? b.name : "Your listing";
+      document.getElementById("modalContent").innerHTML = `
+        <div class="success-box">
+          <div class="mark">✓</div>
+          <h3>Payment received</h3>
+          <p class="lead">Thanks! ${escapeHtml(name)} will appear as Featured within a minute or two, once Stripe confirms the subscription.</p>
+          <button class="btn" style="width:100%;" onclick="closeFeatureModal();">Done</button>
+        </div>
+      `;
+      document.getElementById("modalOverlay").classList.add("open");
+    }
+    const url = new URL(window.location.href);
+    url.searchParams.delete("checkout");
+    url.searchParams.delete("business");
+    history.replaceState({}, "", url.toString());
+  }
+}
+
+/* ---------------------------------------------------------
    INIT
 --------------------------------------------------------- */
-loadData();
+loadData().then(handleCheckoutReturn);
 </script>
 </body>
 </html>

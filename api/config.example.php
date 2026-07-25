@@ -10,4 +10,10 @@ return [
   'db'   => 'cpaneluser_clearinghouse',
   'user' => 'cpaneluser_dbuser',
   'pass' => 'change-me',
+
+  // From your Stripe Dashboard → Developers → API keys / Webhooks.
+  // Use test-mode keys (sk_test_.../pk_test_...) until you're ready to go live.
+  'stripe_secret_key'      => 'sk_test_...',
+  'stripe_publishable_key' => 'pk_test_...',
+  'stripe_webhook_secret'  => 'whsec_...',
 ];
