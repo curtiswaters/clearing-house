@@ -644,7 +644,6 @@ function renderListing(id){
         <div class="cta-row">
           <a class="btn" href="tel:${b.phone.replace(/[^\d+]/g,'')}">Call ${b.phone}</a>
           <a class="btn ghost" href="#/category/${b.category}">See similar listings</a>
-          ${!b.featured ? `<button class="btn brass" onclick="openFeatureModal('${b.id}')">★ Get Featured — $30/mo</button>` : ``}
         </div>
       </div>
     </div>
