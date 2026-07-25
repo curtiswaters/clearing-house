@@ -290,7 +290,7 @@
       <div class="logo-mark">CH</div>
       <div class="logo-text">
         <div class="name">The Clearing House</div>
-        <div class="tag">Charlotte Metro directory</div>
+        <div class="tag">Charlotte Estate Sale Pros Directory</div>
       </div>
     </div>
     <nav class="cats" id="topnav"></nav>
@@ -367,28 +367,28 @@ const CATEGORIES = {
 };
 
 const DEFAULT_BUSINESSES = [
-  { id:"caring-transitions-sw", name:"Caring Transitions of Charlotte South & West", category:"estate-sale", phone:"(704) 321-4000", city:"Charlotte, NC", oneliner:"Full-service senior relocation, downsizing, and online-auction estate sales.", description:"Coordinates the whole transition — from sorting and appraising belongings to running an in-home or online (CTBids) estate sale — for families downsizing, relocating, or settling an estate." },
-  { id:"estate-buyers-liquidators", name:"Estate Buyers and Liquidators", category:"estate-sale", phone:"(980) 446-4849", city:"Charlotte, NC", oneliner:"Buys and liquidates full estate contents in one visit.", description:"Evaluates and purchases estate contents directly, offering a faster alternative to running a multi-day public sale." },
-  { id:"mike-d-antiques", name:"Mike D Antiques & Estate Planning", category:"estate-sale", phone:"(704) 968-2613", city:"Gastonia, NC", oneliner:"Family-run estate sale company known for fair, first-come pricing.", description:"Runs in-home estate sales with a relaxed, honor-system approach to pricing, and also operates an antiques shop for consigned pieces." },
-  { id:"auctions-on-demand", name:"Auctions On Demand LLC", category:"estate-sale", phone:"(803) 325-7580", city:"Rock Hill, SC", oneliner:"Online auction house for estate and liquidation items.", description:"Photographs, lists, and auctions estate items online with in-person inspection before bidding, an alternative to a traditional in-home sale." },
-  { id:"bluestar-move-management", name:"Bluestar Move Management", category:"estate-sale", phone:"(980) 938-2490", city:"Charlotte, NC", oneliner:"Plans and executes senior and downsizing moves start to finish.", description:"Handles floor planning, packing, and unpacking for downsizing moves, coordinating what stays, sells, donates, or gets hauled away." },
-  { id:"charlotte-sisters-organizing", name:"Charlotte Sisters Organizing LLC", category:"estate-sale", phone:"(813) 495-4944", city:"Charlotte, NC", oneliner:"Home organizing team that helps sort and purge before a move or sale.", description:"Works alongside families to sort, organize, and purge belongings — often paired with an estate sale or move — to get a home ready to list or downsize into." },
-  { id:"fresh-start-moving", name:"Fresh Start Moving Services", category:"estate-sale", phone:"(704) 241-2147", city:"Gastonia, NC", oneliner:"Moving company that also clears out leftover items after a move.", description:"Primarily a residential moving crew, with add-on junk and furniture removal for whatever doesn't make the trip to the new home." },
+  { id:"caring-transitions-sw", name:"Caring Transitions of Charlotte South & West", category:"estate-sale", phone:"(704) 321-4000", city:"Charlotte, NC", website:"caringtransitionsofcharlottesw.com", oneliner:"Full-service senior relocation, downsizing, and online-auction estate sales.", description:"Coordinates the whole transition — from sorting and appraising belongings to running an in-home or online (CTBids) estate sale — for families downsizing, relocating, or settling an estate." },
+  { id:"estate-buyers-liquidators", name:"Estate Buyers and Liquidators", category:"estate-sale", phone:"(980) 446-4849", city:"Charlotte, NC", website:"estateliquidatorscharlotte.com", oneliner:"Buys and liquidates full estate contents in one visit.", description:"Evaluates and purchases estate contents directly, offering a faster alternative to running a multi-day public sale." },
+  { id:"mike-d-antiques", name:"Mike D Antiques & Estate Planning", category:"estate-sale", phone:"(704) 968-2613", city:"Gastonia, NC", website:null, oneliner:"Family-run estate sale company known for fair, first-come pricing.", description:"Runs in-home estate sales with a relaxed, honor-system approach to pricing, and also operates an antiques shop for consigned pieces." },
+  { id:"auctions-on-demand", name:"Auctions On Demand LLC", category:"estate-sale", phone:"(803) 325-7580", city:"Rock Hill, SC", website:"auctionsondemand.com", oneliner:"Online auction house for estate and liquidation items.", description:"Photographs, lists, and auctions estate items online with in-person inspection before bidding, an alternative to a traditional in-home sale." },
+  { id:"bluestar-move-management", name:"Bluestar Move Management", category:"estate-sale", phone:"(980) 938-2490", city:"Charlotte, NC", website:"bluestarmoving.com/estate-sales", oneliner:"Plans and executes senior and downsizing moves start to finish.", description:"Handles floor planning, packing, and unpacking for downsizing moves, coordinating what stays, sells, donates, or gets hauled away." },
+  { id:"charlotte-sisters-organizing", name:"Charlotte Sisters Organizing LLC", category:"estate-sale", phone:"(813) 495-4944", city:"Charlotte, NC", website:"cltsos.com", oneliner:"Home organizing team that helps sort and purge before a move or sale.", description:"Works alongside families to sort, organize, and purge belongings — often paired with an estate sale or move — to get a home ready to list or downsize into." },
+  { id:"fresh-start-moving", name:"Fresh Start Moving Services", category:"estate-sale", phone:"(704) 241-2147", city:"Gastonia, NC", website:"freshstartmovers.com", oneliner:"Moving company that also clears out leftover items after a move.", description:"Primarily a residential moving crew, with add-on junk and furniture removal for whatever doesn't make the trip to the new home." },
 
-  { id:"carolina-junk-out", name:"Carolina Junk Out", category:"junk-removal", phone:"(980) 428-9057", city:"Charlotte, NC", oneliner:"Fast, full-property junk hauling for move-outs.", description:"Two-person crew handling whole-property hauls, from single items to full house clear-outs, with same-day turnaround in many cases." },
-  { id:"gh-junk-removal", name:"GH Junk Removal and Cleaning Services", category:"junk-removal", phone:"(980) 680-3793", city:"Charlotte, NC", oneliner:"Same-day furniture and junk pickup.", description:"Removes furniture, appliances, and general junk with quick response times, often arriving within the hour of a call." },
-  { id:"two-men-junk-truck", name:"Two Men and a Junk Truck", category:"junk-removal", phone:"(704) 981-6264", city:"Charlotte, NC", oneliner:"Locally run hauling crew for furniture and clutter.", description:"Handles residential junk removal jobs of all sizes, from single-item pickups to clearing out an entire house." },
-  { id:"junk-raider", name:"Junk Raider", category:"junk-removal", phone:"(704) 594-1271", city:"Charlotte, NC", oneliner:"Sorts what stays and what goes before hauling.", description:"Clears sheds, garages, and full homes, checking in on what to keep versus discard rather than hauling everything indiscriminately." },
-  { id:"ca-junk-removal", name:"C&A Junk Removal and Demolition LLC", category:"junk-removal", phone:"(980) 285-0564", city:"Charlotte, NC", oneliner:"Handles heavy and oversized items, including pianos.", description:"Takes on full-property haul-outs, including large or awkward items like pianos and appliances, with flexible same-week scheduling." },
-  { id:"junk-rescue", name:"Junk Rescue", category:"junk-removal", phone:"(800) 586-5911", city:"Charlotte, NC", oneliner:"Donates reusable items instead of sending everything to landfill.", description:"Clears full properties while sorting out items with remaining useful life for donation, reducing what ends up in a landfill." },
-  { id:"trash-and-stash", name:"Trash and Stash Junk Removal", category:"junk-removal", phone:"(704) 327-2446", city:"Charlotte, NC", oneliner:"Property management-grade cleanouts with donation coordination.", description:"Regularly used for property management and estate cleanouts, coordinating donation drop-offs alongside standard hauling." },
-  { id:"lilly-n-me", name:"Lilly n' Me Junk Removal and Dumpster Rental", category:"junk-removal", phone:"(704) 877-1298", city:"Charlotte, NC", oneliner:"Junk hauling plus on-site dumpster rental.", description:"Offers both hands-on junk removal and dumpster drop-off, useful for larger clean-out jobs done over several days." },
-  { id:"junk-king-charlotte", name:"Junk King Charlotte", category:"junk-removal", phone:"(704) 469-4815", city:"Charlotte, NC", oneliner:"National franchise crew for full-home and yard clear-outs.", description:"Removes furniture, sheds, and yard debris as part of a national franchise network, with upfront pricing before work begins." },
-  { id:"college-hunks", name:"College Hunks Hauling Junk and Moving", category:"junk-removal", phone:"(704) 286-9321", city:"Charlotte, NC", oneliner:"Combines moving labor with junk hauling in one crew.", description:"Pairs moving-day labor with junk removal, useful when a clean-out and a move are happening at the same time." },
+  { id:"carolina-junk-out", name:"Carolina Junk Out", category:"junk-removal", phone:"(980) 428-9057", city:"Charlotte, NC", website:"carolinajunkout.com", oneliner:"Fast, full-property junk hauling for move-outs.", description:"Two-person crew handling whole-property hauls, from single items to full house clear-outs, with same-day turnaround in many cases." },
+  { id:"gh-junk-removal", name:"GH Junk Removal and Cleaning Services", category:"junk-removal", phone:"(980) 680-3793", city:"Charlotte, NC", website:"ncjunkremovalsvc.com", oneliner:"Same-day furniture and junk pickup.", description:"Removes furniture, appliances, and general junk with quick response times, often arriving within the hour of a call." },
+  { id:"two-men-junk-truck", name:"Two Men and a Junk Truck", category:"junk-removal", phone:"(704) 981-6264", city:"Charlotte, NC", website:"twomenandajunktruck.com/locations/nc/junk-removal-charlotte", oneliner:"Locally run hauling crew for furniture and clutter.", description:"Handles residential junk removal jobs of all sizes, from single-item pickups to clearing out an entire house." },
+  { id:"junk-raider", name:"Junk Raider", category:"junk-removal", phone:"(704) 594-1271", city:"Charlotte, NC", website:"junkraider.com", oneliner:"Sorts what stays and what goes before hauling.", description:"Clears sheds, garages, and full homes, checking in on what to keep versus discard rather than hauling everything indiscriminately." },
+  { id:"ca-junk-removal", name:"C&A Junk Removal and Demolition LLC", category:"junk-removal", phone:"(980) 285-0564", city:"Charlotte, NC", website:null, oneliner:"Handles heavy and oversized items, including pianos.", description:"Takes on full-property haul-outs, including large or awkward items like pianos and appliances, with flexible same-week scheduling." },
+  { id:"junk-rescue", name:"Junk Rescue", category:"junk-removal", phone:"(800) 586-5911", city:"Charlotte, NC", website:"junkrescue.com", oneliner:"Donates reusable items instead of sending everything to landfill.", description:"Clears full properties while sorting out items with remaining useful life for donation, reducing what ends up in a landfill." },
+  { id:"trash-and-stash", name:"Trash and Stash Junk Removal", category:"junk-removal", phone:"(704) 327-2446", city:"Charlotte, NC", website:"trashandstash.com", oneliner:"Property management-grade cleanouts with donation coordination.", description:"Regularly used for property management and estate cleanouts, coordinating donation drop-offs alongside standard hauling." },
+  { id:"lilly-n-me", name:"Lilly n' Me Junk Removal and Dumpster Rental", category:"junk-removal", phone:"(704) 877-1298", city:"Charlotte, NC", website:"lillyandmejunkremoval.com", oneliner:"Junk hauling plus on-site dumpster rental.", description:"Offers both hands-on junk removal and dumpster drop-off, useful for larger clean-out jobs done over several days." },
+  { id:"junk-king-charlotte", name:"Junk King Charlotte", category:"junk-removal", phone:"(704) 469-4815", city:"Charlotte, NC", website:"junk-king.com/locations/charlotte", oneliner:"National franchise crew for full-home and yard clear-outs.", description:"Removes furniture, sheds, and yard debris as part of a national franchise network, with upfront pricing before work begins." },
+  { id:"college-hunks", name:"College Hunks Hauling Junk and Moving", category:"junk-removal", phone:"(704) 286-9321", city:"Charlotte, NC", website:"collegehunkshaulingjunk.com/charlotte", oneliner:"Combines moving labor with junk hauling in one crew.", description:"Pairs moving-day labor with junk removal, useful when a clean-out and a move are happening at the same time." },
 
-  { id:"toss-it-hoarding", name:"Toss It Hoarding Cleanup Services", category:"hoarding-biohazard", phone:"(704) 313-1301", city:"Charlotte, NC", oneliner:"Clears heavily cluttered or hoarded homes quickly.", description:"Specializes in fast turnarounds on hoarded or heavily cluttered properties, often ahead of a sale or listing deadline." },
-  { id:"load-it-biohazard", name:"Load It Biohazard Cleanup Services", category:"hoarding-biohazard", phone:"(704) 251-6372", city:"Charlotte, NC", oneliner:"Handles biohazard and contamination cleanup.", description:"Addresses biohazard and contamination issues that sometimes accompany an estate situation, beyond standard cleaning or hauling." },
-  { id:"combat-cleaning", name:"Combat Cleaning — Carpet, Biohazard, Steam & Hoarding", category:"hoarding-biohazard", phone:"(980) 445-8443", city:"Cornelius, NC", oneliner:"Deep cleaning and hoarding remediation for lake-area homes.", description:"Provides deep carpet and steam cleaning alongside hoarding remediation, serving the Lake Norman area north of Charlotte." }
+  { id:"toss-it-hoarding", name:"Toss It Hoarding Cleanup Services", category:"hoarding-biohazard", phone:"(704) 313-1301", city:"Charlotte, NC", website:null, oneliner:"Clears heavily cluttered or hoarded homes quickly.", description:"Specializes in fast turnarounds on hoarded or heavily cluttered properties, often ahead of a sale or listing deadline." },
+  { id:"load-it-biohazard", name:"Load It Biohazard Cleanup Services", category:"hoarding-biohazard", phone:"(704) 251-6372", city:"Charlotte, NC", website:"loaditjunk.com", oneliner:"Handles biohazard and contamination cleanup.", description:"Addresses biohazard and contamination issues that sometimes accompany an estate situation, beyond standard cleaning or hauling." },
+  { id:"combat-cleaning", name:"Combat Cleaning — Carpet, Biohazard, Steam & Hoarding", category:"hoarding-biohazard", phone:"(980) 445-8443", city:"Cornelius, NC", website:"combatcleaningclt.com", oneliner:"Deep cleaning and hoarding remediation for lake-area homes.", description:"Provides deep carpet and steam cleaning alongside hoarding remediation, serving the Lake Norman area north of Charlotte." }
 ];
 
 /* ---------------------------------------------------------
@@ -426,6 +426,12 @@ function sortForDisplay(list){
 }
 function escapeHtml(s){
   return s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function websiteHref(w){
+  return /^https?:\/\//i.test(w) ? w : `https://${w}`;
+}
+function websiteLabel(w){
+  return w.replace(/^https?:\/\//i, "").replace(/\/$/, "");
 }
 
 function cardHtml(b){
@@ -640,9 +646,11 @@ function renderListing(id){
         <div class="contact-row">
           <div class="contact-chip">📞 <a href="tel:${b.phone.replace(/[^\d+]/g,'')}">${b.phone}</a></div>
           <div class="contact-chip">📍 ${escapeHtml(b.city)}</div>
+          ${b.website ? `<div class="contact-chip">🌐 <a href="${escapeHtml(websiteHref(b.website))}" target="_blank" rel="noopener noreferrer">${escapeHtml(websiteLabel(b.website))}</a></div>` : ``}
         </div>
         <div class="cta-row">
           <a class="btn" href="tel:${b.phone.replace(/[^\d+]/g,'')}">Call ${b.phone}</a>
+          ${b.website ? `<a class="btn ghost" href="${escapeHtml(websiteHref(b.website))}" target="_blank" rel="noopener noreferrer">Visit website</a>` : ``}
           <a class="btn ghost" href="#/category/${b.category}">See similar listings</a>
         </div>
       </div>

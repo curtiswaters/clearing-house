@@ -67,6 +67,7 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '')
       $category = $_POST['category'] ?? '';
       $phone = trim($_POST['phone'] ?? '');
       $city = trim($_POST['city'] ?? '');
+      $website = trim($_POST['website'] ?? '') ?: null;
       $oneliner = trim($_POST['oneliner'] ?? '');
       $description = trim($_POST['description'] ?? '');
       $featured = isset($_POST['featured']) ? 1 : 0;
@@ -77,11 +78,11 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '')
         $error = 'Name, category, phone, and city are required.';
       } else {
         if ($isNew) {
-          $stmt = $pdo->prepare('INSERT INTO businesses (id, name, category, phone, city, oneliner, description, featured) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-          $stmt->execute([$id, $name, $category, $phone, $city, $oneliner, $description, $featured]);
+          $stmt = $pdo->prepare('INSERT INTO businesses (id, name, category, phone, city, website, oneliner, description, featured) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+          $stmt->execute([$id, $name, $category, $phone, $city, $website, $oneliner, $description, $featured]);
         } else {
-          $stmt = $pdo->prepare('UPDATE businesses SET name=?, category=?, phone=?, city=?, oneliner=?, description=?, featured=? WHERE id=?');
-          $stmt->execute([$name, $category, $phone, $city, $oneliner, $description, $featured, $id]);
+          $stmt = $pdo->prepare('UPDATE businesses SET name=?, category=?, phone=?, city=?, website=?, oneliner=?, description=?, featured=? WHERE id=?');
+          $stmt->execute([$name, $category, $phone, $city, $website, $oneliner, $description, $featured, $id]);
         }
         header('Location: index.php');
         exit;
@@ -175,6 +176,9 @@ $businesses = $authed ? $pdo->query('SELECT * FROM businesses ORDER BY category,
       </div>
     </div>
 
+    <label>Website (optional — domain or full URL)</label>
+    <input type="text" name="website" value="<?= h($editing['website'] ?? '') ?>" placeholder="example.com">
+
     <label>One-liner (shown on listing cards)</label>
     <input type="text" name="oneliner" value="<?= h($editing['oneliner'] ?? '') ?>">
 
@@ -200,12 +204,13 @@ $businesses = $authed ? $pdo->query('SELECT * FROM businesses ORDER BY category,
   </div>
 
   <table>
-    <tr><th>Name</th><th>Category</th><th>City</th><th>Featured</th><th></th></tr>
+    <tr><th>Name</th><th>Category</th><th>City</th><th>Website</th><th>Featured</th><th></th></tr>
     <?php foreach ($businesses as $b): ?>
       <tr>
         <td><?= h($b['name']) ?></td>
         <td><?= h(CATEGORIES[$b['category']] ?? $b['category']) ?></td>
         <td><?= h($b['city']) ?></td>
+        <td><?= $b['website'] ? '<a href="' . h((preg_match('/^https?:\/\//i', $b['website']) ? '' : 'https://') . $b['website']) . '" target="_blank" rel="noopener noreferrer">' . h($b['website']) . '</a>' : '—' ?></td>
         <td><?= $b['featured'] ? '<span class="featured-yes">Yes</span>' : 'No' ?></td>
         <td>
           <a href="?edit=<?= urlencode($b['id']) ?>">Edit</a>
