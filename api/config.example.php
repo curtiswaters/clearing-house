@@ -16,4 +16,11 @@ return [
   'stripe_secret_key'      => 'sk_test_...',
   'stripe_publishable_key' => 'pk_test_...',
   'stripe_webhook_secret'  => 'whsec_...',
+
+  // Contact form (api/contact.php). contact_from_email should be a mailbox
+  // on your own domain (e.g. noreply@yourdomain.com) — most cPanel mail
+  // setups will flag or reject mail sent "from" an address on another
+  // domain. contact_to_email is where messages actually get delivered.
+  'contact_to_email'   => 'info@dominatewithbrand.com',
+  'contact_from_email' => 'noreply@yourdomain.com',
 ];

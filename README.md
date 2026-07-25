@@ -14,10 +14,11 @@ Contact: Curtis Waters · info@dominatewithbrand.com · (704) 345-2964
   `#/listing/...`, `#/about`, `#/contact`, `#/faq`, `#/privacy`).
 - `hero_estatedir1.webp` — the homepage hero image. Must stay in the same folder
   as `index.html` (referenced by a relative path).
-- `api/` — PHP endpoints backing the listing data and payments
-  (`listings.php`, `create-checkout-session.php`, `stripe-webhook.php`,
-  `db.php`, `config.example.php`). Requires PHP + MySQL, e.g. a cPanel
-  hosting plan. Talks to Stripe directly over cURL — no Composer/SDK needed.
+- `api/` — PHP endpoints backing the listing data, payments, and contact
+  form (`listings.php`, `create-checkout-session.php`, `stripe-webhook.php`,
+  `contact.php`, `db.php`, `config.example.php`). Requires PHP + MySQL, e.g.
+  a cPanel hosting plan. Talks to Stripe directly over cURL — no
+  Composer/SDK needed.
 - `sql/` — `schema.sql` (creates the `businesses` table) and `seed.php` (one-time
   import of the original listing data).
 
@@ -64,6 +65,11 @@ of one-time setup steps are required in addition to uploading files.
    `https://yourdomain.com/api/stripe-webhook.php`, subscribed to the
    `checkout.session.completed` event, then copy its signing secret into
    `api/config.php` as `stripe_webhook_secret`.
+7. **Configure the contact form**: set `contact_from_email` in
+   `api/config.php` to a real mailbox on your domain (e.g.
+   `noreply@yourdomain.com`, created in cPanel → Email Accounts). Most mail
+   servers reject or spam-flag mail whose From address isn't on the sending
+   domain, so this needs to match your domain, not `info@dominatewithbrand.com`.
 
 No `.htaccess` rewrite rules are needed for routing — the site uses
 hash-based client-side routing (`#/`, `#/category/...`, etc.), so every route
@@ -93,10 +99,17 @@ Featured on reload.
 Both endpoints call Stripe's API directly over cURL rather than the official
 `stripe-php` SDK, so no Composer install is required on the server.
 
+## Contact form
+
+Submitting the contact form now sends a real email via `api/contact.php`,
+using PHP's built-in `mail()` (the server's local MTA) rather than opening
+the visitor's own email client. It includes a hidden honeypot field for
+basic spam filtering and strips newlines from user input before it reaches
+any email header, to prevent header injection. See the Deploying steps above
+for the one required config value (`contact_from_email`).
+
 ## Known limitations to address before going live
 
-- **Contact form**: submits via `mailto:`, opening the visitor's own email
-  client. It does not send email directly from a server.
 - **Listing data editing**: adding/editing/removing listings currently
   requires direct SQL (e.g. via phpMyAdmin). A small admin page would let
   this happen without touching the database directly.

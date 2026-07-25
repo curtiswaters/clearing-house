@@ -670,25 +670,48 @@ function renderContact(){
     </div>
     <div class="info-panel">
       <h2>Send a message</h2>
-      <p style="margin-bottom:20px;">This form opens your email client addressed to our team — nothing is submitted directly from this page.</p>
+      <p style="margin-bottom:20px;">Send us a message directly — we'll reply to the email address you provide.</p>
       <form onsubmit="return handleContactSubmit(event)">
         <div class="cf-group"><label>Name</label><input type="text" id="cfName" required></div>
         <div class="cf-group"><label>Email</label><input type="email" id="cfEmail" required></div>
         <div class="cf-group"><label>What's this about?</label><input type="text" id="cfSubject" placeholder="e.g. Add my business, correct a listing…"></div>
         <div class="cf-group"><label>Message</label><textarea id="cfMessage" required></textarea></div>
+        <div style="position:absolute; left:-9999px;" aria-hidden="true">
+          <label>Leave this field blank</label><input type="text" id="cfWebsite" tabindex="-1" autocomplete="off">
+        </div>
         <button type="submit" class="btn">Send message</button>
+        <p id="cfStatus" class="mono" style="font-size:12px; margin-top:12px;"></p>
       </form>
     </div>
   </div>`;
 }
-function handleContactSubmit(e){
+async function handleContactSubmit(e){
   e.preventDefault();
-  const name = document.getElementById("cfName").value;
-  const email = document.getElementById("cfEmail").value;
-  const subject = document.getElementById("cfSubject").value || "Message from The Clearing House site";
-  const message = document.getElementById("cfMessage").value;
-  const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-  window.location.href = `mailto:info@dominatewithbrand.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const status = document.getElementById("cfStatus");
+  const btn = e.target.querySelector("button[type=submit]");
+  const payload = {
+    name: document.getElementById("cfName").value,
+    email: document.getElementById("cfEmail").value,
+    subject: document.getElementById("cfSubject").value,
+    message: document.getElementById("cfMessage").value,
+    website: document.getElementById("cfWebsite").value
+  };
+  btn.disabled = true;
+  status.textContent = "Sending…";
+  try{
+    const res = await fetch("api/contact.php", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if(!res.ok || !data.ok) throw new Error(data.error || "Could not send message");
+    e.target.reset();
+    status.textContent = "Message sent — thanks! We'll get back to you soon.";
+  }catch(err){
+    status.textContent = "Something went wrong sending your message. Please try again or call/email us directly.";
+  }
+  btn.disabled = false;
   return false;
 }
 
