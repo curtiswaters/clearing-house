@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Clearing House — Charlotte Estate &amp; Cleanout Directory</title>
+<meta name="description" content="Find estate sale cleanout companies in Charlotte NC, estate sale services, and estate sale planning help across Charlotte and Rock Hill SC. A directory of vetted estate sale, junk removal, and hoarding cleanup businesses.">
+<meta name="keywords" content="estate sale clean out charlotte nc, estate sale cleanout charlotte nc, estate sale charlotte nc, estate sale charlotte, estate sale planning, estate sale service charlotte nc, estate sale rock hill sc, estate sale charlotte">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #EDE7D9;
+    --paper-2: #E4DCC8;
+    --ink: #211C16;
+    --ink-soft: #55503F;
+    --navy: #2B3A4A;
+    --navy-soft: #405166;
+    --brass: #A6782C;
+    --brass-light: #C79A47;
+    --rust: #A6432A;
+    --sage: #6E7B5D;
+    --line: #D3C9AF;
+    --card-bg: #F6F1E4;
+    --shadow: 0 1px 0 rgba(33,28,22,0.06), 0 8px 24px -12px rgba(33,28,22,0.25);
+    --radius: 3px;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--paper);
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px);
+    background-size: 100% 42px;
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection{ background: var(--brass-light); color: var(--ink); }
+  a{ color: inherit; text-decoration: none; }
+  button{ font-family: inherit; cursor: pointer; }
+  .mono{ font-family: 'IBM Plex Mono', monospace; }
+  .display{ font-family: 'Fraunces', serif; }
+
+  :focus-visible{ outline: 2px solid var(--navy); outline-offset: 2px; }
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+  /* ---------- Header ---------- */
+  header.site{
+    position: sticky; top:0; z-index: 40;
+    background: rgba(237,231,217,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner{
+    max-width: 1120px; margin:0 auto; padding: 18px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .logo{ display:flex; align-items:center; gap:12px; cursor:pointer; }
+  .logo-mark{
+    width:38px; height:38px; border:2px solid var(--ink); border-radius:2px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:700; font-size:17px;
+    background: var(--card-bg); transform: rotate(-2deg);
+  }
+  .logo-text .name{ font-family:'Fraunces',serif; font-weight:600; font-size:19px; line-height:1; }
+  .logo-text .tag{ font-size:11px; letter-spacing:.06em; color:var(--ink-soft); text-transform:uppercase; margin-top:3px; }
+  nav.cats{ display:flex; gap:6px; }
+  nav.cats a{
+    font-size:13px; padding:7px 12px; border-radius:20px; border:1px solid transparent;
+    color: var(--ink-soft); white-space:nowrap;
+  }
+  nav.cats a:hover{ border-color: var(--line); background: var(--card-bg); }
+  nav.cats a.active{ background: var(--ink); color: var(--paper); }
+  @media (max-width: 860px){ nav.cats{ display:none; } }
+
+  /* ---------- Hero / search ---------- */
+  .hero{ max-width:1120px; margin: 0 auto; padding: 56px 24px 32px; }
+  .hero-image{
+    width:100%; max-width: 1072px; margin: 0 auto 34px; display:block;
+    border-radius: var(--radius); border: 1px solid var(--ink); box-shadow: var(--shadow);
+  }
+  .hero .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.12em;
+    text-transform: uppercase; color: var(--rust); margin-bottom:14px; display:flex; align-items:center; gap:8px;
+  }
+  .hero .eyebrow::before{ content:''; width:20px; height:1px; background:var(--rust); display:inline-block; }
+  .hero h1{
+    font-size: clamp(32px, 5vw, 54px); line-height:1.03; margin:0 0 16px; font-weight:600; max-width: 780px;
+  }
+  .hero h1 em{ font-style:italic; color: var(--navy); }
+  .hero p.sub{ max-width:560px; color:var(--ink-soft); font-size:16px; line-height:1.55; margin:0 0 30px; }
+
+  .search-drawer{
+    background: var(--card-bg);
+    border:1px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 6px;
+    display:flex; gap:6px; max-width: 640px;
+    position: relative;
+  }
+  .search-drawer::before{
+    content: 'FIND A SERVICE';
+    position:absolute; top:-11px; left:14px; background: var(--paper);
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; padding:0 6px; color: var(--ink-soft);
+  }
+  .search-drawer input{
+    flex:1; border:none; background:transparent; font-size:16px; padding:12px 14px; font-family:'Inter',sans-serif; color:var(--ink);
+  }
+  .search-drawer input:focus{ outline:none; }
+  .search-drawer button{
+    background: var(--ink); color: var(--paper); border:none; padding: 0 20px; border-radius:2px; font-size:14px; font-weight:600;
+  }
+  .search-drawer button:hover{ background: var(--navy); }
+
+  /* category tiles */
+  .tiles{ max-width:1120px; margin: 36px auto 0; padding: 0 24px; display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+  @media (max-width: 760px){ .tiles{ grid-template-columns:1fr; } }
+  .tile{
+    background: var(--card-bg); border:1px solid var(--line); border-radius: var(--radius);
+    padding:20px; position:relative; overflow:hidden; transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .tile:hover{ transform: translateY(-2px); box-shadow: var(--shadow); }
+  .tile .tab{
+    position:absolute; top:0; right:18px; padding: 4px 10px; border-radius: 0 0 4px 4px;
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.08em; color:#fff;
+  }
+  .tile h3{ font-family:'Fraunces',serif; font-size:21px; margin: 18px 0 8px; }
+  .tile p{ color:var(--ink-soft); font-size:13.5px; line-height:1.5; margin:0 0 14px; }
+  .tile .count{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft); }
+
+  .cat-estate .tab{ background: var(--navy); }
+  .cat-junk .tab{ background: var(--sage); }
+  .cat-hoarding .tab{ background: var(--rust); }
+
+  /* ---------- section headers ---------- */
+  .section-head{ max-width:1120px; margin: 52px auto 18px; padding:0 24px; display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .section-head h2{ font-family:'Fraunces',serif; font-size: 26px; margin:0; font-weight:600; }
+  .section-head .meta{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft); }
+
+  /* ---------- listing grid & cards ---------- */
+  .grid{ max-width:1120px; margin: 0 auto; padding: 0 24px 60px; display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+  @media (max-width: 900px){ .grid{ grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 620px){ .grid{ grid-template-columns: 1fr; } }
+
+  .card{
+    background: var(--card-bg); border:1px solid var(--line); border-radius: var(--radius);
+    display:flex; flex-direction:column; position:relative; transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{ transform: translateY(-3px); box-shadow: var(--shadow); }
+  .folder-tab{
+    align-self:flex-start; margin-left:18px; padding: 5px 12px 6px; border-radius: 4px 4px 0 0;
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.08em; color:#fff; transform: translateY(1px);
+  }
+  .folder-tab.estate-sale{ background: var(--navy); }
+  .folder-tab.junk-removal{ background: var(--sage); }
+  .folder-tab.hoarding-biohazard{ background: var(--rust); }
+
+  .card-body{ border-top:1px solid var(--ink); padding: 16px 18px 18px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .card-top{ display:flex; align-items:flex-start; gap:12px; }
+  .avatar{
+    width:44px; height:44px; border-radius:2px; flex:none; display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:600; color:#fff; font-size:16px; border:1px solid rgba(0,0,0,0.15);
+  }
+  .card h3{ font-family:'Fraunces',serif; font-size:17px; margin:0 0 2px; line-height:1.25; }
+  .card .loc{ font-size:12px; color: var(--ink-soft); }
+  .card .desc{ font-size:13.5px; color: var(--ink-soft); line-height:1.5; margin:2px 0 4px; }
+  .card .phone{ font-family:'IBM Plex Mono',monospace; font-size:13px; margin-top:auto; padding-top:8px; border-top: 1px dashed var(--line); display:flex; justify-content:space-between; align-items:center; }
+  .featured-pill{
+    display:inline-flex; align-items:center; gap:5px; background: var(--brass); color:#fff; font-size:10px;
+    font-family:'IBM Plex Mono',monospace; letter-spacing:.06em; padding:3px 8px; border-radius:12px; position:absolute; top:-9px; right:14px;
+    box-shadow: 0 2px 6px rgba(166,120,44,0.4);
+  }
+
+  /* ---------- listing detail ---------- */
+  .listing-page{ max-width: 860px; margin: 40px auto 80px; padding: 0 24px; }
+  .back-link{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft); display:inline-flex; align-items:center; gap:6px; margin-bottom:24px; }
+  .back-link:hover{ color: var(--ink); }
+  .listing-head{ display:flex; gap:20px; align-items:flex-start; margin-bottom: 22px; flex-wrap:wrap; }
+  .listing-head .avatar{ width:76px; height:76px; font-size:28px; border-radius:3px; }
+  .listing-title h1{ font-family:'Fraunces',serif; font-size: clamp(26px,4vw,36px); margin:0 0 8px; }
+  .listing-title .badges{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .badge{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; padding:4px 10px; border-radius:12px; color:#fff; }
+  .badge.estate-sale{ background:var(--navy); } .badge.junk-removal{ background:var(--sage); } .badge.hoarding-biohazard{ background:var(--rust); }
+  .badge.featured{ background: var(--brass); }
+
+  .listing-panel{ background: var(--card-bg); border:1px solid var(--ink); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); }
+  .listing-panel .desc{ font-size:16px; line-height:1.7; color: var(--ink); margin-bottom: 22px; }
+  .listing-panel .desc .oneliner{ color: var(--ink-soft); font-style:italic; font-family:'Fraunces',serif; font-size:18px; display:block; margin-bottom:14px; }
+  .contact-row{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:22px; }
+  .contact-chip{ display:flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:20px; padding:8px 16px; font-family:'IBM Plex Mono',monospace; font-size:14px; background:#fff9ee; }
+  .cta-row{ display:flex; gap:12px; flex-wrap:wrap; }
+  .btn{ font-weight:600; font-size:14px; padding:12px 20px; border-radius:2px; border:1px solid var(--ink); background: var(--ink); color: var(--paper); }
+  .btn:hover{ background: var(--navy); border-color: var(--navy); }
+  .btn.ghost{ background:transparent; color: var(--ink); }
+  .btn.ghost:hover{ background: var(--paper-2); }
+  .btn.brass{ background: var(--brass); border-color: var(--brass); }
+  .btn.brass:hover{ background: var(--brass-light); border-color: var(--brass-light); }
+
+  /* ---------- empty state ---------- */
+  .empty{ max-width:1120px; margin: 40px auto 80px; padding: 40px 24px; text-align:center; color: var(--ink-soft); }
+  .empty .display{ font-size:22px; color: var(--ink); display:block; margin-bottom:8px; }
+
+  /* ---------- modal ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; background: rgba(33,28,22,0.55); display:none; align-items:center; justify-content:center;
+    padding: 20px; z-index: 100;
+  }
+  .modal-overlay.open{ display:flex; }
+  .modal{
+    background: var(--paper); border:1px solid var(--ink); border-radius: var(--radius); max-width:440px; width:100%;
+    padding: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.35); position:relative;
+  }
+  .modal h3{ font-family:'Fraunces',serif; font-size:22px; margin: 0 0 4px; }
+  .modal p.lead{ font-size:13.5px; color:var(--ink-soft); margin: 0 0 20px; line-height:1.5; }
+  .modal .close{ position:absolute; top:16px; right:16px; background:none; border:none; font-size:18px; color:var(--ink-soft); }
+  .plan-box{ border:1px solid var(--line); border-radius: var(--radius); padding:14px 16px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; background:#fff9ee; }
+  .plan-box .price{ font-family:'Fraunces',serif; font-size:24px; }
+  .plan-box .price span{ font-size:13px; font-family:'Inter',sans-serif; color:var(--ink-soft); }
+  label.field{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin: 0 0 6px; }
+  .field-group{ margin-bottom:14px; }
+  .field-row{ display:flex; gap:10px; }
+  .field-row .field-group{ flex:1; }
+  input.stripe-input{
+    width:100%; border:1px solid var(--line); background:#fff; border-radius:2px; padding:10px 12px; font-size:14px; font-family:'IBM Plex Mono',monospace;
+  }
+  input.stripe-input:focus{ outline:none; border-color: var(--navy); }
+  .stripe-badge{ display:flex; align-items:center; gap:6px; font-size:11px; color: var(--ink-soft); margin-top:16px; justify-content:center; }
+  .success-box{ text-align:center; padding: 10px 0 4px; }
+  .success-box .mark{ width:52px; height:52px; border-radius:50%; background: var(--sage); color:#fff; display:flex; align-items:center; justify-content:center; margin: 0 auto 16px; font-size:24px; }
+
+  footer{ border-top:1px solid var(--line); padding: 36px 24px 28px; color:var(--ink-soft); font-size:12.5px; }
+  .footer-inner{ max-width:1120px; margin:0 auto; display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+  .footer-col h4{ font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink); margin:0 0 10px; }
+  .footer-col a{ display:block; margin-bottom:6px; }
+  .footer-col a:hover{ color:var(--ink); text-decoration:underline; }
+  .footer-bottom{ max-width:1120px; margin: 24px auto 0; padding-top:18px; border-top:1px solid var(--line); font-size:11.5px; }
+
+  /* ---------- info pages (about / contact / faq / privacy) ---------- */
+  .info-page{ max-width: 780px; margin: 0 auto; padding: 48px 24px 80px; }
+  .info-page h1{ font-family:'Fraunces',serif; font-size: clamp(28px,4vw,42px); margin:0 0 8px; }
+  .info-page .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--rust); margin-bottom:14px; }
+  .info-page .lead{ color:var(--ink-soft); font-size:16px; line-height:1.6; max-width:600px; margin-bottom: 30px; }
+  .info-panel{ background: var(--card-bg); border:1px solid var(--ink); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); }
+  .info-panel h2{ font-family:'Fraunces',serif; font-size:22px; margin: 0 0 12px; }
+  .info-panel h2:not(:first-child){ margin-top: 30px; }
+  .info-panel p{ font-size:15px; line-height:1.7; color: var(--ink); margin: 0 0 14px; }
+  .info-panel ul{ margin:0 0 14px; padding-left: 20px; }
+  .info-panel li{ font-size:15px; line-height:1.7; margin-bottom:6px; }
+  .info-panel a.inline{ text-decoration:underline; color: var(--navy); }
+
+  .faq-item{ border-bottom:1px solid var(--line); padding: 18px 0; }
+  .faq-item:last-child{ border-bottom:none; padding-bottom:0; }
+  .faq-item summary{ font-family:'Fraunces',serif; font-size:17px; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::after{ content:'+'; font-family:'IBM Plex Mono',monospace; font-size:20px; color:var(--brass); flex:none; }
+  .faq-item[open] summary::after{ content:'–'; }
+  .faq-item p{ margin-top: 10px; }
+
+  .contact-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom: 26px; }
+  @media (max-width:600px){ .contact-grid{ grid-template-columns:1fr; } }
+  .contact-card{ border:1px solid var(--line); border-radius: var(--radius); padding:16px 18px; background:#fff9ee; }
+  .contact-card .label{ font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin-bottom:6px; }
+  .contact-card .value{ font-size:15px; font-weight:600; }
+  .contact-card .value a{ text-decoration:underline; }
+
+  .cf-group{ margin-bottom:16px; }
+  .cf-group label{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:6px; }
+  .cf-group input, .cf-group textarea{ width:100%; border:1px solid var(--line); background:#fff; border-radius:2px; padding:11px 13px; font-size:14px; font-family:'Inter',sans-serif; }
+  .cf-group textarea{ min-height:120px; resize:vertical; }
+  .cf-group input:focus, .cf-group textarea:focus{ outline:none; border-color:var(--navy); }
+
+  footer a{ text-decoration:none; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <div class="logo" onclick="navigate('#/')">
+      <div class="logo-mark">CH</div>
+      <div class="logo-text">
+        <div class="name">The Clearing House</div>
+        <div class="tag">Charlotte, NC directory</div>
+      </div>
+    </div>
+    <nav class="cats" id="topnav"></nav>
+  </div>
+</header>
+
+<div id="app"></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col" style="max-width:280px;">
+      <h4>The Clearing House</h4>
+      <p style="margin:0 0 10px; line-height:1.6; color:var(--ink-soft);">A directory of estate sale cleanout, junk removal, and hoarding/biohazard companies serving Charlotte, NC and the surrounding metro, including Rock Hill, SC.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Directory</h4>
+      <a href="#/category/estate-sale">Estate Sale &amp; Cleanout</a>
+      <a href="#/category/junk-removal">Junk Removal</a>
+      <a href="#/category/hoarding-biohazard">Hoarding &amp; Biohazard</a>
+      <a href="#" onclick="openFeatureModal(null); return false;">Get a Featured listing</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#/about">About</a>
+      <a href="#/contact">Contact</a>
+      <a href="#/faq">FAQ</a>
+      <a href="#/privacy">Privacy Policy</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="tel:7043452964">(704) 345-2964</a>
+      <a href="mailto:info@dominatewithbrand.com">info@dominatewithbrand.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © <span id="footerYear"></span> Dominate Your Brand LLC · 30 Gould St Suite R, Sheridan, WY 82801 · This site is a demo listings dataset; always verify licensing, insurance, and pricing directly with a business before hiring.
+  </div>
+</footer>
+
+<!-- Feature upgrade modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="close" onclick="closeFeatureModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+/* ---------------------------------------------------------
+   DATA
+--------------------------------------------------------- */
+const CATEGORIES = {
+  "estate-sale": {
+    label: "Estate Sale &amp; Cleanout",
+    short: "Estate Sale & Cleanout",
+    color: "var(--navy)",
+    className: "estate-sale",
+    blurb: "Companies that appraise, price, stage, and sell the contents of a home — then clear what's left — for downsizing, moving, or settling an estate."
+  },
+  "junk-removal": {
+    label: "Junk Removal",
+    short: "Junk Removal",
+    color: "var(--sage)",
+    className: "junk-removal",
+    blurb: "Hauling crews that physically remove furniture, trash, and debris — the muscle for a clean-out, without appraising or selling contents."
+  },
+  "hoarding-biohazard": {
+    label: "Hoarding &amp; Biohazard Cleanup",
+    short: "Hoarding & Biohazard",
+    color: "var(--rust)",
+    className: "hoarding-biohazard",
+    blurb: "Specialized crews trained for extreme clutter, contamination, or biohazard situations that go beyond a standard clean-out."
+  }
+};
+
+const DEFAULT_BUSINESSES = [
+  { id:"caring-transitions-sw", name:"Caring Transitions of Charlotte South & West", category:"estate-sale", phone:"(704) 321-4000", city:"Charlotte, NC", oneliner:"Full-service senior relocation, downsizing, and online-auction estate sales.", description:"Coordinates the whole transition — from sorting and appraising belongings to running an in-home or online (CTBids) estate sale — for families downsizing, relocating, or settling an estate." },
+  { id:"estate-buyers-liquidators", name:"Estate Buyers and Liquidators", category:"estate-sale", phone:"(980) 446-4849", city:"Charlotte, NC", oneliner:"Buys and liquidates full estate contents in one visit.", description:"Evaluates and purchases estate contents directly, offering a faster alternative to running a multi-day public sale." },
+  { id:"mike-d-antiques", name:"Mike D Antiques & Estate Planning", category:"estate-sale", phone:"(704) 968-2613", city:"Gastonia, NC", oneliner:"Family-run estate sale company known for fair, first-come pricing.", description:"Runs in-home estate sales with a relaxed, honor-system approach to pricing, and also operates an antiques shop for consigned pieces." },
+  { id:"auctions-on-demand", name:"Auctions On Demand LLC", category:"estate-sale", phone:"(803) 325-7580", city:"Rock Hill, SC", oneliner:"Online auction house for estate and liquidation items.", description:"Photographs, lists, and auctions estate items online with in-person inspection before bidding, an alternative to a traditional in-home sale." },
+  { id:"bluestar-move-management", name:"Bluestar Move Management", category:"estate-sale", phone:"(980) 938-2490", city:"Charlotte, NC", oneliner:"Plans and executes senior and downsizing moves start to finish.", description:"Handles floor planning, packing, and unpacking for downsizing moves, coordinating what stays, sells, donates, or gets hauled away." },
+  { id:"charlotte-sisters-organizing", name:"Charlotte Sisters Organizing LLC", category:"estate-sale", phone:"(813) 495-4944", city:"Charlotte, NC", oneliner:"Home organizing team that helps sort and purge before a move or sale.", description:"Works alongside families to sort, organize, and purge belongings — often paired with an estate sale or move — to get a home ready to list or downsize into." },
+  { id:"fresh-start-moving", name:"Fresh Start Moving Services", category:"estate-sale", phone:"(704) 241-2147", city:"Gastonia, NC", oneliner:"Moving company that also clears out leftover items after a move.", description:"Primarily a residential moving crew, with add-on junk and furniture removal for whatever doesn't make the trip to the new home." },
+
+  { id:"carolina-junk-out", name:"Carolina Junk Out", category:"junk-removal", phone:"(980) 428-9057", city:"Charlotte, NC", oneliner:"Fast, full-property junk hauling for move-outs.", description:"Two-person crew handling whole-property hauls, from single items to full house clear-outs, with same-day turnaround in many cases." },
+  { id:"gh-junk-removal", name:"GH Junk Removal and Cleaning Services", category:"junk-removal", phone:"(980) 680-3793", city:"Charlotte, NC", oneliner:"Same-day furniture and junk pickup.", description:"Removes furniture, appliances, and general junk with quick response times, often arriving within the hour of a call." },
+  { id:"two-men-junk-truck", name:"Two Men and a Junk Truck", category:"junk-removal", phone:"(704) 981-6264", city:"Charlotte, NC", oneliner:"Locally run hauling crew for furniture and clutter.", description:"Handles residential junk removal jobs of all sizes, from single-item pickups to clearing out an entire house." },
+  { id:"junk-raider", name:"Junk Raider", category:"junk-removal", phone:"(704) 594-1271", city:"Charlotte, NC", oneliner:"Sorts what stays and what goes before hauling.", description:"Clears sheds, garages, and full homes, checking in on what to keep versus discard rather than hauling everything indiscriminately." },
+  { id:"ca-junk-removal", name:"C&A Junk Removal and Demolition LLC", category:"junk-removal", phone:"(980) 285-0564", city:"Charlotte, NC", oneliner:"Handles heavy and oversized items, including pianos.", description:"Takes on full-property haul-outs, including large or awkward items like pianos and appliances, with flexible same-week scheduling." },
+  { id:"junk-rescue", name:"Junk Rescue", category:"junk-removal", phone:"(800) 586-5911", city:"Charlotte, NC", oneliner:"Donates reusable items instead of sending everything to landfill.", description:"Clears full properties while sorting out items with remaining useful life for donation, reducing what ends up in a landfill." },
+  { id:"trash-and-stash", name:"Trash and Stash Junk Removal", category:"junk-removal", phone:"(704) 327-2446", city:"Charlotte, NC", oneliner:"Property management-grade cleanouts with donation coordination.", description:"Regularly used for property management and estate cleanouts, coordinating donation drop-offs alongside standard hauling." },
+  { id:"lilly-n-me", name:"Lilly n' Me Junk Removal and Dumpster Rental", category:"junk-removal", phone:"(704) 877-1298", city:"Charlotte, NC", oneliner:"Junk hauling plus on-site dumpster rental.", description:"Offers both hands-on junk removal and dumpster drop-off, useful for larger clean-out jobs done over several days." },
+  { id:"junk-king-charlotte", name:"Junk King Charlotte", category:"junk-removal", phone:"(704) 469-4815", city:"Charlotte, NC", oneliner:"National franchise crew for full-home and yard clear-outs.", description:"Removes furniture, sheds, and yard debris as part of a national franchise network, with upfront pricing before work begins." },
+  { id:"college-hunks", name:"College Hunks Hauling Junk and Moving", category:"junk-removal", phone:"(704) 286-9321", city:"Charlotte, NC", oneliner:"Combines moving labor with junk hauling in one crew.", description:"Pairs moving-day labor with junk removal, useful when a clean-out and a move are happening at the same time." },
+
+  { id:"toss-it-hoarding", name:"Toss It Hoarding Cleanup Services", category:"hoarding-biohazard", phone:"(704) 313-1301", city:"Charlotte, NC", oneliner:"Clears heavily cluttered or hoarded homes quickly.", description:"Specializes in fast turnarounds on hoarded or heavily cluttered properties, often ahead of a sale or listing deadline." },
+  { id:"load-it-biohazard", name:"Load It Biohazard Cleanup Services", category:"hoarding-biohazard", phone:"(704) 251-6372", city:"Charlotte, NC", oneliner:"Handles biohazard and contamination cleanup.", description:"Addresses biohazard and contamination issues that sometimes accompany an estate situation, beyond standard cleaning or hauling." },
+  { id:"combat-cleaning", name:"Combat Cleaning — Carpet, Biohazard, Steam & Hoarding", category:"hoarding-biohazard", phone:"(980) 445-8443", city:"Cornelius, NC", oneliner:"Deep cleaning and hoarding remediation for lake-area homes.", description:"Provides deep carpet and steam cleaning alongside hoarding remediation, serving the Lake Norman area north of Charlotte." }
+];
+
+/* ---------------------------------------------------------
+   STORAGE — shared across all visitors (demo dataset)
+--------------------------------------------------------- */
+let businesses = [];
+const STORAGE_KEY = "directory-businesses-v1";
+
+async function loadData(){
+  try{
+    const res = await window.storage.get(STORAGE_KEY, true);
+    businesses = JSON.parse(res.value);
+  }catch(e){
+    businesses = DEFAULT_BUSINESSES.map(b => ({...b, featured:false}));
+    try{ await window.storage.set(STORAGE_KEY, JSON.stringify(businesses), true); }catch(e2){ /* ignore */ }
+  }
+  render();
+}
+
+async function persist(){
+  try{ await window.storage.set(STORAGE_KEY, JSON.stringify(businesses), true); }catch(e){ /* ignore */ }
+}
+
+/* ---------------------------------------------------------
+   HELPERS
+--------------------------------------------------------- */
+function initials(name){
+  return name.split(/\s+/).filter(w => /[A-Za-z]/.test(w[0])).slice(0,2).map(w=>w[0].toUpperCase()).join("");
+}
+function avatarColor(cat){
+  return cat === "estate-sale" ? "var(--navy)" : cat === "junk-removal" ? "var(--sage)" : "var(--rust)";
+}
+function sortForDisplay(list){
+  return [...list].sort((a,b)=>{
+    if(a.featured && !b.featured) return -1;
+    if(!a.featured && b.featured) return 1;
+    return a.name.localeCompare(b.name);
+  });
+}
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function cardHtml(b){
+  const cat = CATEGORIES[b.category];
+  return `
+  <a href="#/listing/${b.id}" class="card" style="text-decoration:none;">
+    ${b.featured ? `<div class="featured-pill">★ Featured</div>` : ``}
+    <div class="folder-tab ${b.category}">${cat.short}</div>
+    <div class="card-body">
+      <div class="card-top">
+        <div class="avatar" style="background:${avatarColor(b.category)}">${initials(b.name)}</div>
+        <div>
+          <h3>${escapeHtml(b.name)}</h3>
+          <div class="loc">${escapeHtml(b.city)}</div>
+        </div>
+      </div>
+      <div class="desc">${escapeHtml(b.oneliner)}</div>
+      <div class="phone"><span>${b.phone}</span><span style="color:var(--ink-soft);">view →</span></div>
+    </div>
+  </a>`;
+}
+
+/* ---------------------------------------------------------
+   ROUTER
+--------------------------------------------------------- */
+function navigate(hash){ location.hash = hash; }
+window.addEventListener("hashchange", render);
+
+function currentRoute(){
+  const h = location.hash || "#/";
+  if(h === "#/" || h === "") return {page:"home"};
+  const cat = h.match(/^#\/category\/([\w-]+)/);
+  if(cat) return {page:"category", slug: cat[1]};
+  const listing = h.match(/^#\/listing\/([\w-]+)/);
+  if(listing) return {page:"listing", id: listing[1]};
+  const search = h.match(/^#\/search\?q=(.*)$/);
+  if(search) return {page:"search", q: decodeURIComponent(search[1])};
+  if(h === "#/about") return {page:"about"};
+  if(h === "#/contact") return {page:"contact"};
+  if(h === "#/faq") return {page:"faq"};
+  if(h === "#/privacy") return {page:"privacy"};
+  return {page:"home"};
+}
+
+function renderTopNav(activeSlug){
+  const el = document.getElementById("topnav");
+  const route = currentRoute();
+  const catLinks = Object.entries(CATEGORIES).map(([slug,c]) => `
+    <a href="#/category/${slug}" class="${slug===activeSlug ? 'active':''}">${c.short}</a>
+  `).join("");
+  const infoLinks = ["about","contact","faq"].map(p => `
+    <a href="#/${p}" class="${route.page===p ? 'active':''}" style="text-transform:capitalize;">${p}</a>
+  `).join("");
+  el.innerHTML = catLinks + `<span style="width:1px; background:var(--line); margin:0 4px;"></span>` + infoLinks;
+}
+
+function render(){
+  const route = currentRoute();
+  const app = document.getElementById("app");
+  if(route.page === "home"){ renderTopNav(null); app.innerHTML = renderHome(); attachSearchHandler(); }
+  else if(route.page === "category"){ renderTopNav(route.slug); app.innerHTML = renderCategory(route.slug); attachSearchHandler(); }
+  else if(route.page === "listing"){ renderTopNav(null); app.innerHTML = renderListing(route.id); }
+  else if(route.page === "search"){ renderTopNav(null); app.innerHTML = renderSearch(route.q); attachSearchHandler(); }
+  else if(route.page === "about"){ renderTopNav(null); app.innerHTML = renderAbout(); }
+  else if(route.page === "contact"){ renderTopNav(null); app.innerHTML = renderContact(); }
+  else if(route.page === "faq"){ renderTopNav(null); app.innerHTML = renderFAQ(); }
+  else if(route.page === "privacy"){ renderTopNav(null); app.innerHTML = renderPrivacy(); }
+  const yearEl = document.getElementById("footerYear");
+  if(yearEl) yearEl.textContent = new Date().getFullYear();
+  window.scrollTo({top:0, behavior:"instant"});
+}
+
+/* ---------------------------------------------------------
+   PAGE: HOME
+--------------------------------------------------------- */
+function renderHome(){
+  const featured = sortForDisplay(businesses).filter(b=>b.featured);
+  const tiles = Object.entries(CATEGORIES).map(([slug,c])=>{
+    const n = businesses.filter(b=>b.category===slug).length;
+    return `
+    <a href="#/category/${slug}" class="tile cat-${slug === 'estate-sale' ? 'estate' : slug === 'junk-removal' ? 'junk' : 'hoarding'}" style="text-decoration:none; display:block;">
+      <div class="tab" style="background:${c.color}">${c.short.toUpperCase()}</div>
+      <h3>${c.label}</h3>
+      <p>${c.blurb}</p>
+      <div class="count">${n} listed →</div>
+    </a>`;
+  }).join("");
+
+  return `
+    <div class="hero">
+      <img class="hero-image" src="hero_estatedir1.webp" alt="Clearing out a home is hard, finding who to call shouldn't be — illustration of a woman with a tablet in a staged living room with estate sale items and junk removal boxes.">
+      <div class="eyebrow">Charlotte metro · estate &amp; cleanout services</div>
+      <h1 class="sr-only">Clearing out a home is hard. Finding who to call shouldn't be. Estate sale cleanout and junk removal directory for Charlotte, NC.</h1>
+      <p class="sub">A directory of estate sale cleanout companies in Charlotte NC, junk removal crews, and hoarding cleanup specialists — organized by what they actually do, not just how they advertise. Whether you're just starting estate sale planning or need an estate sale service in Charlotte NC or Rock Hill SC this week, start here.</p>
+      <form class="search-drawer" onsubmit="return handleSearchSubmit(event)">
+        <input id="searchInput" type="text" placeholder="Search by name, city, or service…" autocomplete="off">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <div class="tiles">${tiles}</div>
+
+    ${featured.length ? `
+    <div class="section-head"><h2>Featured this month</h2><div class="meta">sponsored placement</div></div>
+    <div class="grid">${featured.map(cardHtml).join("")}</div>
+    ` : ``}
+
+    <div class="section-head"><h2>All listings</h2><div class="meta">${businesses.length} businesses</div></div>
+    <div class="grid">${sortForDisplay(businesses).map(cardHtml).join("")}</div>
+  `;
+}
+
+/* ---------------------------------------------------------
+   PAGE: CATEGORY
+--------------------------------------------------------- */
+function renderCategory(slug){
+  const cat = CATEGORIES[slug];
+  if(!cat) return renderHome();
+  const list = sortForDisplay(businesses.filter(b=>b.category===slug));
+  return `
+    <div class="hero" style="padding-bottom:8px;">
+      <div class="eyebrow">${businesses.filter(b=>b.category===slug).length} businesses</div>
+      <h1>${cat.label}</h1>
+      <p class="sub">${cat.blurb}</p>
+      <form class="search-drawer" onsubmit="return handleSearchSubmit(event)">
+        <input id="searchInput" type="text" placeholder="Search within ${cat.short}…" autocomplete="off">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <div class="section-head"><h2>${cat.short}</h2><div class="meta">sorted: featured first</div></div>
+    <div class="grid">${list.length ? list.map(cardHtml).join("") : `<div class="empty">No listings yet in this category.</div>`}</div>
+  `;
+}
+
+/* ---------------------------------------------------------
+   PAGE: SEARCH
+--------------------------------------------------------- */
+function attachSearchHandler(){
+  const input = document.getElementById("searchInput");
+  if(!input) return;
+  const route = currentRoute();
+  if(route.page === "search") input.value = route.q;
+  input.focus();
+}
+function handleSearchSubmit(e){
+  e.preventDefault();
+  const q = document.getElementById("searchInput").value.trim();
+  navigate(`#/search?q=${encodeURIComponent(q)}`);
+  return false;
+}
+function renderSearch(q){
+  const needle = q.toLowerCase();
+  const results = sortForDisplay(businesses.filter(b =>
+    b.name.toLowerCase().includes(needle) ||
+    b.city.toLowerCase().includes(needle) ||
+    b.oneliner.toLowerCase().includes(needle) ||
+    b.description.toLowerCase().includes(needle) ||
+    CATEGORIES[b.category].short.toLowerCase().includes(needle)
+  ));
+  return `
+    <div class="hero" style="padding-bottom:8px;">
+      <div class="eyebrow">search</div>
+      <h1>Results for “${escapeHtml(q)}”</h1>
+      <form class="search-drawer" onsubmit="return handleSearchSubmit(event)">
+        <input id="searchInput" type="text" placeholder="Search by name, city, or service…" autocomplete="off">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <div class="section-head"><h2>${results.length} match${results.length===1?'':'es'}</h2></div>
+    <div class="grid">${results.length ? results.map(cardHtml).join("") : `<div class="empty"><span class="display">No matches.</span>Try a different name, city, or category.</div>`}</div>
+  `;
+}
+
+/* ---------------------------------------------------------
+   PAGE: LISTING DETAIL
+--------------------------------------------------------- */
+function renderListing(id){
+  const b = businesses.find(x=>x.id===id);
+  if(!b) return `<div class="empty"><span class="display">Listing not found.</span><a href="#/">← Back to directory</a></div>`;
+  const cat = CATEGORIES[b.category];
+  return `
+    <div class="listing-page">
+      <a class="back-link" href="#/category/${b.category}">← Back to ${cat.short}</a>
+      <div class="listing-head">
+        <div class="avatar" style="background:${avatarColor(b.category)}">${initials(b.name)}</div>
+        <div class="listing-title">
+          <h1>${escapeHtml(b.name)}</h1>
+          <div class="badges">
+            <span class="badge ${b.category}">${cat.short}</span>
+            ${b.featured ? `<span class="badge featured">★ Featured</span>` : ``}
+            <span class="mono" style="font-size:12px; color:var(--ink-soft);">${escapeHtml(b.city)}</span>
+          </div>
+        </div>
+      </div>
+      <div class="listing-panel">
+        <div class="desc">
+          <span class="oneliner">“${escapeHtml(b.oneliner)}”</span>
+          ${escapeHtml(b.description)}
+        </div>
+        <div class="contact-row">
+          <div class="contact-chip">📞 <a href="tel:${b.phone.replace(/[^\d+]/g,'')}">${b.phone}</a></div>
+          <div class="contact-chip">📍 ${escapeHtml(b.city)}</div>
+        </div>
+        <div class="cta-row">
+          <a class="btn" href="tel:${b.phone.replace(/[^\d+]/g,'')}">Call ${b.phone}</a>
+          <a class="btn ghost" href="#/category/${b.category}">See similar listings</a>
+          ${!b.featured ? `<button class="btn brass" onclick="openFeatureModal('${b.id}')">★ Get Featured — $30/mo</button>` : ``}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ---------------------------------------------------------
+   PAGE: ABOUT
+--------------------------------------------------------- */
+function renderAbout(){
+  return `
+  <div class="info-page">
+    <div class="eyebrow">About this directory</div>
+    <h1>Built for the moment you don't know who to call.</h1>
+    <p class="lead">The Clearing House is an estate sale and cleanout directory for Charlotte, NC — made for the specific, stressful moment when a home needs to be sorted, sold, and cleared, and you're not sure where to start.</p>
+    <div class="info-panel">
+      <h2>Why we built this</h2>
+      <p>Searching "estate sale charlotte nc" or "estate sale cleanout charlotte nc" turns up a mix of individual sale listings, national franchises, and one-person hauling crews — with no easy way to tell which type of help you actually need. We built The Clearing House to separate <strong>estate sale &amp; cleanout services</strong> (companies that appraise, price, and sell the contents of a home) from <strong>junk removal</strong> (crews that haul away what's left) and <strong>hoarding &amp; biohazard cleanup</strong> (specialists for extreme or hazardous situations) — so you can find the right kind of estate sale service in Charlotte NC, Rock Hill SC, and the surrounding metro without guessing.</p>
+      <h2>How listings work</h2>
+      <p>Businesses are organized by category and searchable by name, city, or service. A Featured Listing upgrade lets a business appear at the top of the homepage and its category page — featured placement is clearly labeled, and it never replaces or hides a business's basic listing.</p>
+      <h2>Who runs it</h2>
+      <p>The Clearing House is published and maintained by <strong>Dominate Your Brand LLC</strong>. Our contact person for the directory is <strong>Curtis Waters</strong> — reach out any time through the <a class="inline" href="#/contact">contact page</a> with questions, corrections, or a listing to add.</p>
+      <h2>A note on estate sale planning</h2>
+      <p>If you're just starting estate sale planning — figuring out whether to run a sale, hire a liquidator, or go straight to a cleanout crew — the <a class="inline" href="#/faq">FAQ page</a> walks through how each category of business fits into that process.</p>
+    </div>
+  </div>`;
+}
+
+/* ---------------------------------------------------------
+   PAGE: CONTACT
+--------------------------------------------------------- */
+function renderContact(){
+  return `
+  <div class="info-page">
+    <div class="eyebrow">Get in touch</div>
+    <h1>Contact The Clearing House</h1>
+    <p class="lead">Questions about a listing, a correction to submit, or a business you'd like to see added to the Charlotte estate sale and cleanout directory — reach out below.</p>
+    <div class="contact-grid">
+      <div class="contact-card"><div class="label">Contact person</div><div class="value">Curtis Waters</div></div>
+      <div class="contact-card"><div class="label">Phone</div><div class="value"><a href="tel:7043452964">(704) 345-2964</a></div></div>
+      <div class="contact-card"><div class="label">Email</div><div class="value"><a href="mailto:info@dominatewithbrand.com">info@dominatewithbrand.com</a></div></div>
+      <div class="contact-card"><div class="label">Mailing address</div><div class="value" style="font-weight:500;">30 Gould St Suite R<br>Sheridan, WY 82801</div></div>
+    </div>
+    <div class="info-panel">
+      <h2>Send a message</h2>
+      <p style="margin-bottom:20px;">This form opens your email client addressed to our team — nothing is submitted directly from this page.</p>
+      <form onsubmit="return handleContactSubmit(event)">
+        <div class="cf-group"><label>Name</label><input type="text" id="cfName" required></div>
+        <div class="cf-group"><label>Email</label><input type="email" id="cfEmail" required></div>
+        <div class="cf-group"><label>What's this about?</label><input type="text" id="cfSubject" placeholder="e.g. Add my business, correct a listing…"></div>
+        <div class="cf-group"><label>Message</label><textarea id="cfMessage" required></textarea></div>
+        <button type="submit" class="btn">Send message</button>
+      </form>
+    </div>
+  </div>`;
+}
+function handleContactSubmit(e){
+  e.preventDefault();
+  const name = document.getElementById("cfName").value;
+  const email = document.getElementById("cfEmail").value;
+  const subject = document.getElementById("cfSubject").value || "Message from The Clearing House site";
+  const message = document.getElementById("cfMessage").value;
+  const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+  window.location.href = `mailto:info@dominatewithbrand.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  return false;
+}
+
+/* ---------------------------------------------------------
+   PAGE: FAQ
+--------------------------------------------------------- */
+function renderFAQ(){
+  const items = [
+    {
+      q: "What's the difference between an estate sale cleanout and junk removal?",
+      a: "An estate sale cleanout in Charlotte NC usually starts with an estate sale company sorting, pricing, and selling the contents of a home. Junk removal comes after — or instead of — a sale, when a crew simply hauls away what's left. If everything in the home needs to go and nothing needs to be sold first, junk removal alone may be enough. If there are valuables worth selling, start with an estate sale service."
+    },
+    {
+      q: "How do I start estate sale planning?",
+      a: "Begin by walking through the home and deciding what's being kept, sold, donated, or discarded. From there, an estate sale company in Charlotte can appraise and price items for a sale (in-home or online), and a junk removal or cleanout crew can clear whatever remains afterward. Many families use one company from our Estate Sale &amp; Cleanout category for the sale, then a Junk Removal listing for the final clear-out."
+    },
+    {
+      q: "Do you list estate sale companies outside Charlotte, like Rock Hill SC?",
+      a: "Yes. While most listings serve Charlotte directly, the directory also includes estate sale and liquidation services in nearby areas such as Rock Hill, SC, Gastonia, NC, and Cornelius, NC, since many companies serve the wider Charlotte metro."
+    },
+    {
+      q: "How much does an estate sale service in Charlotte NC cost?",
+      a: "Pricing varies by company and typically depends on how the sale is structured — a commission on items sold, a flat fee, or an hourly rate for cleanout labor. We don't set or collect pricing; contact a listed business directly for a quote specific to your home."
+    },
+    {
+      q: "What does a 'Featured' listing mean?",
+      a: "A Featured Listing is a paid upgrade ($30/month) that moves a business to the top of the homepage and its category page. It's clearly marked with a Featured badge and doesn't affect the accuracy of the listing information itself."
+    },
+    {
+      q: "I run an estate sale or cleanout company in Charlotte — how do I get listed?",
+      a: "Reach out through the <a class=\"inline\" href=\"#/contact\">contact page</a> with your business name, category, phone number, and a short description. New listings are added as a standard (non-featured) entry by default; you can add a Featured upgrade at any time."
+    },
+    {
+      q: "Is this directory affiliated with the businesses listed?",
+      a: "No. The Clearing House is an independently published directory maintained by Dominate Your Brand LLC. We are not affiliated with, and do not receive commission from, listed businesses unless they've purchased a Featured Listing upgrade."
+    }
+  ];
+  return `
+  <div class="info-page">
+    <div class="eyebrow">Frequently asked questions</div>
+    <h1>FAQ</h1>
+    <p class="lead">Common questions about estate sale planning, estate sale cleanout services in Charlotte NC, and how this directory works.</p>
+    <div class="info-panel">
+      ${items.map(it => `
+        <details class="faq-item">
+          <summary>${it.q}</summary>
+          <p>${it.a}</p>
+        </details>
+      `).join("")}
+    </div>
+  </div>`;
+}
+
+/* ---------------------------------------------------------
+   PAGE: PRIVACY
+--------------------------------------------------------- */
+function renderPrivacy(){
+  return `
+  <div class="info-page">
+    <div class="eyebrow">Legal</div>
+    <h1>Privacy Policy</h1>
+    <p class="lead">Last updated ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}. This policy explains what information The Clearing House collects and how it's used.</p>
+    <div class="info-panel">
+      <h2>Who we are</h2>
+      <p>The Clearing House (this website) is published by <strong>Dominate Your Brand LLC</strong>, 30 Gould St Suite R, Sheridan, WY 82801. For any privacy question, contact Curtis Waters at <a class="inline" href="mailto:info@dominatewithbrand.com">info@dominatewithbrand.com</a> or <a class="inline" href="tel:7043452964">(704) 345-2964</a>.</p>
+
+      <h2>Information we collect</h2>
+      <p>We collect information in a few limited ways:</p>
+      <ul>
+        <li><strong>Contact form submissions.</strong> If you use the contact page, your name, email address, and message are sent directly to our inbox via your own email client — we do not store form submissions on this website.</li>
+        <li><strong>Featured Listing payments.</strong> If a business purchases a Featured Listing upgrade, payment details are processed by our payment provider; we do not store full card numbers on our own servers.</li>
+        <li><strong>Basic usage data.</strong> Like most websites, our hosting and analytics tools may automatically log standard technical information such as browser type, device type, and pages visited, used only to understand how the directory is used and to keep it running reliably.</li>
+      </ul>
+
+      <h2>How we use information</h2>
+      <p>We use the information above to respond to inquiries, maintain accurate business listings, process Featured Listing payments, and improve the directory. We do not sell personal information to third parties.</p>
+
+      <h2>Listing information</h2>
+      <p>Business names, categories, phone numbers, and descriptions shown on this site are compiled for the purpose of helping people find estate sale and cleanout services in the Charlotte, NC metro area. If you are a business owner and would like a listing corrected or removed, contact us and we'll update it promptly.</p>
+
+      <h2>Cookies and local storage</h2>
+      <p>This site may use browser storage to remember basic preferences and to keep directory data (such as which listings are Featured) up to date across visits. This is not used for advertising or cross-site tracking.</p>
+
+      <h2>Third-party links</h2>
+      <p>Listings may include phone numbers or references to third-party businesses. We aren't responsible for the privacy practices of those businesses once you contact them directly.</p>
+
+      <h2>Changes to this policy</h2>
+      <p>We may update this policy from time to time. Continued use of the site after changes are posted means you accept the revised policy.</p>
+
+      <h2>Contact us</h2>
+      <p>Dominate Your Brand LLC · 30 Gould St Suite R, Sheridan, WY 82801<br>
+      Attn: Curtis Waters · <a class="inline" href="mailto:info@dominatewithbrand.com">info@dominatewithbrand.com</a> · <a class="inline" href="tel:7043452964">(704) 345-2964</a></p>
+    </div>
+  </div>`;
+}
+
+/* ---------------------------------------------------------
+   FEATURE UPGRADE MODAL (mock Stripe checkout)
+--------------------------------------------------------- */
+function openFeatureModal(id){
+  const overlay = document.getElementById("modalOverlay");
+  const content = document.getElementById("modalContent");
+  const options = businesses.map(b => `<option value="${b.id}" ${b.id===id?'selected':''}>${escapeHtml(b.name)}</option>`).join("");
+  content.innerHTML = `
+    <h3>Get Featured</h3>
+    <p class="lead">Featured listings appear first on the homepage and at the top of their category — a simple way for a business to stand out.</p>
+    <div class="plan-box">
+      <div><div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-soft); text-transform:uppercase;">Featured Listing</div><div class="price">$30<span>/month</span></div></div>
+      <div class="mono" style="font-size:11px; color:var(--ink-soft);">cancel anytime</div>
+    </div>
+    <form onsubmit="return submitFeatureForm(event)">
+      <div class="field-group">
+        <label class="field">Business</label>
+        <select class="stripe-input" id="featureBusinessSelect" style="font-family:'Inter',sans-serif;">${options}</select>
+      </div>
+      <div class="field-group">
+        <label class="field">Card number</label>
+        <input class="stripe-input" placeholder="4242 4242 4242 4242" required maxlength="19" id="cardNumber">
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field">Expiry</label>
+          <input class="stripe-input" placeholder="MM / YY" required maxlength="7">
+        </div>
+        <div class="field-group">
+          <label class="field">CVC</label>
+          <input class="stripe-input" placeholder="123" required maxlength="4">
+        </div>
+      </div>
+      <button type="submit" class="btn brass" style="width:100%; margin-top:6px;">Subscribe — $30/mo</button>
+    </form>
+    <div class="stripe-badge">🔒 Payments simulated for this demo — no real charge is made</div>
+  `;
+  overlay.classList.add("open");
+}
+function closeFeatureModal(){
+  document.getElementById("modalOverlay").classList.remove("open");
+}
+async function submitFeatureForm(e){
+  e.preventDefault();
+  const select = document.getElementById("featureBusinessSelect");
+  const id = select.value;
+  const btn = e.target.querySelector("button[type=submit]");
+  btn.textContent = "Processing…";
+  btn.disabled = true;
+  await new Promise(r => setTimeout(r, 900)); // simulate network/Stripe round-trip
+  const b = businesses.find(x=>x.id===id);
+  if(b){ b.featured = true; await persist(); }
+  const name = b ? b.name : "";
+  document.getElementById("modalContent").innerHTML = `
+    <div class="success-box">
+      <div class="mark">✓</div>
+      <h3>You're featured</h3>
+      <p class="lead">${escapeHtml(name)} now appears at the top of the homepage and its category page.</p>
+      <button class="btn" style="width:100%;" onclick="closeFeatureModal(); render();">Done</button>
+    </div>
+  `;
+  return false;
+}
+document.getElementById("modalOverlay").addEventListener("click", (e)=>{
+  if(e.target.id === "modalOverlay") closeFeatureModal();
+});
+
+/* ---------------------------------------------------------
+   INIT
+--------------------------------------------------------- */
+loadData();
+</script>
+</body>
+</html>
