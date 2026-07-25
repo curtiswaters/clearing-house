@@ -405,6 +405,7 @@ async function loadData(){
     console.warn("Could not load listings from the API, showing built-in fallback data.", e);
     businesses = DEFAULT_BUSINESSES.map(b => ({...b, featured:false}));
   }
+  injectBusinessListSchema();
   render();
 }
 
@@ -499,6 +500,7 @@ function render(){
   else if(route.page === "contact"){ renderTopNav(null); app.innerHTML = renderContact(); }
   else if(route.page === "faq"){ renderTopNav(null); app.innerHTML = renderFAQ(); }
   else if(route.page === "privacy"){ renderTopNav(null); app.innerHTML = renderPrivacy(); }
+  if(route.page === "faq") injectFaqSchema(); else removeJsonLd("ld-faq");
   const yearEl = document.getElementById("footerYear");
   if(yearEl) yearEl.textContent = new Date().getFullYear();
   window.scrollTo({top:0, behavior:"instant"});
@@ -745,44 +747,44 @@ async function handleContactSubmit(e){
 /* ---------------------------------------------------------
    PAGE: FAQ
 --------------------------------------------------------- */
+const FAQ_ITEMS = [
+  {
+    q: "What's the difference between an estate sale cleanout and junk removal?",
+    a: "An estate sale cleanout in Charlotte NC usually starts with an estate sale company sorting, pricing, and selling the contents of a home. Junk removal comes after — or instead of — a sale, when a crew simply hauls away what's left. If everything in the home needs to go and nothing needs to be sold first, junk removal alone may be enough. If there are valuables worth selling, start with an estate sale service."
+  },
+  {
+    q: "How do I start estate sale planning?",
+    a: "Begin by walking through the home and deciding what's being kept, sold, donated, or discarded. From there, an estate sale company in Charlotte can appraise and price items for a sale (in-home or online), and a junk removal or cleanout crew can clear whatever remains afterward. Many families use one company from our Estate Sale &amp; Cleanout category for the sale, then a Junk Removal listing for the final clear-out."
+  },
+  {
+    q: "Do you list estate sale companies outside Charlotte, like Rock Hill SC?",
+    a: "Yes. While most listings serve Charlotte directly, the directory also includes estate sale and liquidation services in nearby areas such as Rock Hill, SC, Gastonia, NC, and Cornelius, NC, since many companies serve the wider Charlotte metro."
+  },
+  {
+    q: "How much does an estate sale service in Charlotte NC cost?",
+    a: "Pricing varies by company and typically depends on how the sale is structured — a commission on items sold, a flat fee, or an hourly rate for cleanout labor. We don't set or collect pricing; contact a listed business directly for a quote specific to your home."
+  },
+  {
+    q: "What does a 'Featured' listing mean?",
+    a: "A Featured Listing is a paid upgrade ($30/month) that moves a business to the top of the homepage and its category page. It's clearly marked with a Featured badge and doesn't affect the accuracy of the listing information itself."
+  },
+  {
+    q: "I run an estate sale or cleanout company in Charlotte — how do I get listed?",
+    a: "Reach out through the <a class=\"inline\" href=\"#/contact\">contact page</a> with your business name, category, phone number, and a short description. New listings are added as a standard (non-featured) entry by default; you can add a Featured upgrade at any time."
+  },
+  {
+    q: "Is this directory affiliated with the businesses listed?",
+    a: "No. The Clearing House is an independently published directory maintained by Dominate Your Brand LLC. We are not affiliated with, and do not receive commission from, listed businesses unless they've purchased a Featured Listing upgrade."
+  }
+];
 function renderFAQ(){
-  const items = [
-    {
-      q: "What's the difference between an estate sale cleanout and junk removal?",
-      a: "An estate sale cleanout in Charlotte NC usually starts with an estate sale company sorting, pricing, and selling the contents of a home. Junk removal comes after — or instead of — a sale, when a crew simply hauls away what's left. If everything in the home needs to go and nothing needs to be sold first, junk removal alone may be enough. If there are valuables worth selling, start with an estate sale service."
-    },
-    {
-      q: "How do I start estate sale planning?",
-      a: "Begin by walking through the home and deciding what's being kept, sold, donated, or discarded. From there, an estate sale company in Charlotte can appraise and price items for a sale (in-home or online), and a junk removal or cleanout crew can clear whatever remains afterward. Many families use one company from our Estate Sale &amp; Cleanout category for the sale, then a Junk Removal listing for the final clear-out."
-    },
-    {
-      q: "Do you list estate sale companies outside Charlotte, like Rock Hill SC?",
-      a: "Yes. While most listings serve Charlotte directly, the directory also includes estate sale and liquidation services in nearby areas such as Rock Hill, SC, Gastonia, NC, and Cornelius, NC, since many companies serve the wider Charlotte metro."
-    },
-    {
-      q: "How much does an estate sale service in Charlotte NC cost?",
-      a: "Pricing varies by company and typically depends on how the sale is structured — a commission on items sold, a flat fee, or an hourly rate for cleanout labor. We don't set or collect pricing; contact a listed business directly for a quote specific to your home."
-    },
-    {
-      q: "What does a 'Featured' listing mean?",
-      a: "A Featured Listing is a paid upgrade ($30/month) that moves a business to the top of the homepage and its category page. It's clearly marked with a Featured badge and doesn't affect the accuracy of the listing information itself."
-    },
-    {
-      q: "I run an estate sale or cleanout company in Charlotte — how do I get listed?",
-      a: "Reach out through the <a class=\"inline\" href=\"#/contact\">contact page</a> with your business name, category, phone number, and a short description. New listings are added as a standard (non-featured) entry by default; you can add a Featured upgrade at any time."
-    },
-    {
-      q: "Is this directory affiliated with the businesses listed?",
-      a: "No. The Clearing House is an independently published directory maintained by Dominate Your Brand LLC. We are not affiliated with, and do not receive commission from, listed businesses unless they've purchased a Featured Listing upgrade."
-    }
-  ];
   return `
   <div class="info-page">
     <div class="eyebrow">Frequently asked questions</div>
     <h1>FAQ</h1>
     <p class="lead">Common questions about estate sale planning, estate sale cleanout services in Charlotte NC, and how this directory works.</p>
     <div class="info-panel">
-      ${items.map(it => `
+      ${FAQ_ITEMS.map(it => `
         <details class="faq-item">
           <summary>${it.q}</summary>
           <p>${it.a}</p>
@@ -892,6 +894,92 @@ document.getElementById("modalOverlay").addEventListener("click", (e)=>{
 });
 
 /* ---------------------------------------------------------
+   STRUCTURED DATA (JSON-LD)
+--------------------------------------------------------- */
+function setJsonLd(id, data){
+  let el = document.getElementById(id);
+  if(!el){
+    el = document.createElement("script");
+    el.type = "application/ld+json";
+    el.id = id;
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(data);
+}
+function removeJsonLd(id){
+  const el = document.getElementById(id);
+  if(el) el.remove();
+}
+function parseCityState(cityStr){
+  const [locality, region] = cityStr.split(",").map(s => s.trim());
+  return { locality, region };
+}
+function injectSiteSchema(){
+  const origin = window.location.origin + window.location.pathname;
+  setJsonLd("ld-site", {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": origin + "#organization",
+        "name": "The Clearing House",
+        "url": origin,
+        "description": "A directory of estate sale cleanout, junk removal, and hoarding/biohazard cleanup companies serving the Charlotte, NC metro area.",
+        "areaServed": { "@type": "City", "name": "Charlotte" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": origin + "#website",
+        "url": origin,
+        "name": "The Clearing House",
+        "publisher": { "@id": origin + "#organization" }
+      }
+    ]
+  });
+}
+function injectBusinessListSchema(){
+  const origin = window.location.origin + window.location.pathname;
+  setJsonLd("ld-businesses", {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Charlotte estate sale, junk removal, and hoarding cleanup businesses",
+    "itemListElement": businesses.map((b, i) => {
+      const { locality, region } = parseCityState(b.city);
+      const item = {
+        "@type": "LocalBusiness",
+        "name": b.name,
+        "telephone": b.phone,
+        "category": CATEGORIES[b.category] ? CATEGORIES[b.category].short : b.category,
+        "description": b.oneliner,
+        "url": origin + "#/listing/" + b.id,
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": locality,
+          "addressRegion": region,
+          "addressCountry": "US"
+        }
+      };
+      if(b.website) item.sameAs = websiteHref(b.website);
+      return { "@type": "ListItem", "position": i + 1, "item": item };
+    })
+  });
+}
+function injectFaqSchema(){
+  setJsonLd("ld-faq", {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": FAQ_ITEMS.map(it => ({
+      "@type": "Question",
+      "name": it.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": it.a.replace(/<[^>]+>/g, "")
+      }
+    }))
+  });
+}
+
+/* ---------------------------------------------------------
    CHECKOUT RETURN — Stripe redirects back here after success/cancel
 --------------------------------------------------------- */
 function handleCheckoutReturn(){
@@ -921,6 +1009,7 @@ function handleCheckoutReturn(){
 /* ---------------------------------------------------------
    INIT
 --------------------------------------------------------- */
+injectSiteSchema();
 loadData().then(handleCheckoutReturn);
 </script>
 </body>
