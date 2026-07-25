@@ -26,28 +26,39 @@ python3 -m http.server 8000
 
 Then visit `http://localhost:8000`.
 
-## Deploying
+## Deploying (cPanel)
 
-Because this is a single static HTML file plus one image, it can be hosted on
-any static host with zero configuration:
+This is a single static HTML file plus one image, so it needs no build step
+and no server-side language — any cPanel hosting plan can serve it as-is.
 
-- **GitHub Pages**: push this repo, then enable Pages in the repo settings
-  (Settings → Pages → deploy from the `main` branch, root folder).
-- **Netlify / Vercel / Cloudflare Pages**: drag-and-drop the folder or connect
-  the repo — no build command needed.
+- **File Manager / FTP**: upload `index.html` and `hero_estatedir1.webp` into
+  `public_html` (or the document root of a subdomain/addon domain), keeping
+  both files in the same folder.
+- **cPanel Git Version Control**: alternatively, use Git™ Version Control in
+  cPanel to clone this repo directly onto the server, with the repository
+  path set to the desired document root. Pulling future commits then
+  redeploys the site.
+- No `.htaccess` rewrite rules are required — the site uses hash-based
+  client-side routing (`#/`, `#/category/...`, etc.), so every route resolves
+  to the same `index.html` without any server-side rewriting.
 
 ## Data persistence
 
 Listing data (including which businesses are "Featured") is stored via the
-`window.storage` API, which is only available when this file is rendered
-inside a Claude.ai artifact. If you deploy this outside of Claude.ai (GitHub
-Pages, Netlify, etc.), that storage call will fail and the site will silently
-fall back to the default hard-coded dataset in `index.html` on every load —
-meaning Featured status won't persist between visits until a real backend
-or database is wired up.
+`window.storage` API, which only exists inside a Claude.ai artifact. On
+cPanel (or any standalone host), every `window.storage` call fails and the
+site silently falls back to the hard-coded `DEFAULT_BUSINESSES` list in
+`index.html` on every page load. Concretely, this means **Featured status
+does not persist** for other visitors or across reloads — marking a listing
+Featured through the paid flow has no lasting effect until a real backend is
+wired up. See the limitations below; this is a launch blocker if the $30/mo
+Featured placement is meant to actually work.
 
 ## Known limitations to address before going live
 
+- **Featured status doesn't persist** (see Data persistence above): without
+  a real backend or database, paid Featured placement resets on every load.
+  This blocks actually selling the feature.
 - **Payments**: the "Get Featured" checkout is a simulated Stripe flow for
   demo purposes — no real charge is processed. Wiring up real $30/mo billing
   requires a backend (e.g. Stripe Checkout Sessions + a webhook).
