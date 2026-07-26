@@ -10,8 +10,14 @@ CREATE TABLE IF NOT EXISTS businesses (
   website     VARCHAR(255) NULL,
   oneliner    VARCHAR(255) NOT NULL,
   description TEXT         NOT NULL,
-  featured    TINYINT(1)   NOT NULL DEFAULT 0
+  verified    TINYINT(1)   NOT NULL DEFAULT 0,
+  featured    TINYINT(1)   NOT NULL DEFAULT 0,
+  category_sponsor TINYINT(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- If you created this table before the `website` column existed, run instead:
 -- ALTER TABLE businesses ADD COLUMN website VARCHAR(255) NULL AFTER city;
+
+-- If you created this table before the pricing model below existed, run:
+-- ALTER TABLE businesses ADD COLUMN verified TINYINT(1) NOT NULL DEFAULT 0 AFTER description;
+-- ALTER TABLE businesses ADD COLUMN category_sponsor TINYINT(1) NOT NULL DEFAULT 0 AFTER featured;

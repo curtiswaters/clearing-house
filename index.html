@@ -6,6 +6,14 @@
 <title>The Clearing House — Charlotte Estate &amp; Cleanout Directory</title>
 <meta name="description" content="Find estate sale cleanout companies in Charlotte NC, estate sale services, and estate sale planning help across Charlotte and Rock Hill SC. A directory of vetted estate sale, junk removal, and hoarding cleanup businesses.">
 <meta name="keywords" content="estate sale clean out charlotte nc, estate sale cleanout charlotte nc, estate sale charlotte nc, estate sale charlotte, estate sale planning, estate sale service charlotte nc, estate sale rock hill sc, estate sale charlotte">
+<link rel="canonical" href="https://clearinghousecharlotte.com/">
+<meta property="og:site_name" content="The Clearing House">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://clearinghousecharlotte.com/">
+<meta property="og:title" content="The Clearing House — Charlotte Estate & Cleanout Directory">
+<meta property="og:description" content="Find estate sale cleanout companies in Charlotte NC, estate sale services, and estate sale planning help across Charlotte and Rock Hill SC.">
+<meta property="og:image" content="https://clearinghousecharlotte.com/hero_estatedir1.webp">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -75,6 +83,17 @@
   nav.cats a.active{ background: var(--ink); color: var(--paper); }
   @media (max-width: 860px){ nav.cats{ display:none; } }
 
+  .header-ctas{ display:flex; gap:8px; flex-shrink:0; }
+  .header-ctas a{
+    font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:20px; white-space:nowrap;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .header-ctas a.ghost{ border:1px solid var(--ink); color:var(--ink); }
+  .header-ctas a.ghost:hover{ background:var(--card-bg); }
+  .header-ctas a.solid{ background:var(--brass); color:#fff; }
+  .header-ctas a.solid:hover{ background:var(--brass-light); }
+  @media (max-width: 480px){ .header-inner{ flex-wrap:wrap; row-gap:10px; } }
+
   /* ---------- Hero / search ---------- */
   .hero{ max-width:1120px; margin: 0 auto; padding: 56px 24px 32px; }
   .hero-image{
@@ -121,6 +140,15 @@
   }
   .trust-row span{ display:flex; align-items:center; gap:6px; }
   .trust-row span::before{ content:'✓'; color:var(--sage); font-weight:700; }
+
+  .guide-promo{
+    max-width:1120px; margin: 30px auto 0; padding: 22px 26px;
+    background: var(--card-bg); border:1px solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow);
+    display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  }
+  .guide-promo h3{ font-family:'Fraunces',serif; font-size:19px; margin:2px 0 4px; }
+  .guide-promo p{ font-size:13.5px; color:var(--ink-soft); margin:0; max-width:560px; }
+  .guide-promo .btn{ white-space:nowrap; }
 
   /* category tiles */
   .tiles{ max-width:1120px; margin: 36px auto 0; padding: 0 24px; display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
@@ -180,6 +208,7 @@
     font-family:'IBM Plex Mono',monospace; letter-spacing:.06em; padding:3px 8px; border-radius:12px; position:absolute; top:-9px; right:14px;
     box-shadow: 0 2px 6px rgba(166,120,44,0.4);
   }
+  .featured-pill.sponsor{ background: var(--rust); box-shadow: 0 2px 6px rgba(166,67,42,0.4); }
 
   /* ---------- listing detail ---------- */
   .listing-page{ max-width: 860px; margin: 40px auto 80px; padding: 0 24px; }
@@ -192,6 +221,9 @@
   .badge{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; padding:4px 10px; border-radius:12px; color:#fff; }
   .badge.estate-sale{ background:var(--navy); } .badge.junk-removal{ background:var(--sage); } .badge.hoarding-biohazard{ background:var(--rust); }
   .badge.featured{ background: var(--brass); }
+  .badge.sponsor{ background: var(--rust); }
+  .badge.verified{ background: var(--sage); }
+  .verified-check{ color: var(--sage); font-size:13px; font-weight:700; margin-left:4px; }
 
   .listing-panel{ background: var(--card-bg); border:1px solid var(--ink); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); }
   .listing-panel .desc{ font-size:16px; line-height:1.7; color: var(--ink); margin-bottom: 22px; }
@@ -210,33 +242,25 @@
   .empty{ max-width:1120px; margin: 40px auto 80px; padding: 40px 24px; text-align:center; color: var(--ink-soft); }
   .empty .display{ font-size:22px; color: var(--ink); display:block; margin-bottom:8px; }
 
-  /* ---------- modal ---------- */
-  .modal-overlay{
-    position:fixed; inset:0; background: rgba(33,28,22,0.55); display:none; align-items:center; justify-content:center;
-    padding: 20px; z-index: 100;
+  /* pricing page */
+  .pricing-grid{ max-width:1120px; margin: 36px auto 0; padding: 0 24px; display:grid; grid-template-columns: repeat(3,1fr); gap:20px; align-items:stretch; }
+  @media (max-width: 860px){ .pricing-grid{ grid-template-columns:1fr; } }
+  .pricing-card{
+    background: var(--card-bg); border:1px solid var(--ink); border-radius: var(--radius);
+    padding:26px 24px; display:flex; flex-direction:column; position:relative;
   }
-  .modal-overlay.open{ display:flex; }
-  .modal{
-    background: var(--paper); border:1px solid var(--ink); border-radius: var(--radius); max-width:440px; width:100%;
-    padding: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.35); position:relative;
+  .pricing-card.highlight{ background: var(--paper-2); box-shadow: var(--shadow); }
+  .pricing-card .ribbon{
+    position:absolute; top:0; right:20px; background:var(--brass); color:#fff; font-size:11px; font-weight:600;
+    padding:4px 10px; border-radius:0 0 4px 4px; font-family:'IBM Plex Mono',monospace; letter-spacing:.04em;
   }
-  .modal h3{ font-family:'Fraunces',serif; font-size:22px; margin: 0 0 4px; }
-  .modal p.lead{ font-size:13.5px; color:var(--ink-soft); margin: 0 0 20px; line-height:1.5; }
-  .modal .close{ position:absolute; top:16px; right:16px; background:none; border:none; font-size:18px; color:var(--ink-soft); }
-  .plan-box{ border:1px solid var(--line); border-radius: var(--radius); padding:14px 16px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; background:#fff9ee; }
-  .plan-box .price{ font-family:'Fraunces',serif; font-size:24px; }
-  .plan-box .price span{ font-size:13px; font-family:'Inter',sans-serif; color:var(--ink-soft); }
-  label.field{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin: 0 0 6px; }
-  .field-group{ margin-bottom:14px; }
-  .field-row{ display:flex; gap:10px; }
-  .field-row .field-group{ flex:1; }
-  input.stripe-input{
-    width:100%; border:1px solid var(--line); background:#fff; border-radius:2px; padding:10px 12px; font-size:14px; font-family:'IBM Plex Mono',monospace;
-  }
-  input.stripe-input:focus{ outline:none; border-color: var(--navy); }
-  .stripe-badge{ display:flex; align-items:center; gap:6px; font-size:11px; color: var(--ink-soft); margin-top:16px; justify-content:center; }
-  .success-box{ text-align:center; padding: 10px 0 4px; }
-  .success-box .mark{ width:52px; height:52px; border-radius:50%; background: var(--sage); color:#fff; display:flex; align-items:center; justify-content:center; margin: 0 auto 16px; font-size:24px; }
+  .pricing-card h3{ font-family:'Fraunces',serif; font-size:21px; margin:0 0 4px; }
+  .pricing-card .price{ font-family:'Fraunces',serif; font-size:32px; margin:6px 0 4px; }
+  .pricing-card .price span{ font-size:14px; font-family:'Inter',sans-serif; color:var(--ink-soft); }
+  .pricing-card .price-note{ font-size:12px; color:var(--ink-soft); margin-bottom:16px; }
+  .pricing-card ul{ margin:0 0 20px; padding-left:18px; flex:1; }
+  .pricing-card li{ font-size:14px; line-height:1.6; margin-bottom:6px; color:var(--ink); }
+  .pricing-card .btn{ text-align:center; }
 
   footer{ border-top:1px solid var(--line); padding: 36px 24px 28px; color:var(--ink-soft); font-size:12.5px; }
   .footer-inner{ max-width:1120px; margin:0 auto; display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; }
@@ -294,6 +318,10 @@
       </div>
     </div>
     <nav class="cats" id="topnav"></nav>
+    <div class="header-ctas">
+      <a class="ghost" href="#/pricing">Get Verified</a>
+      <a class="solid" href="#/pricing">Advertise</a>
+    </div>
   </div>
 </header>
 
@@ -310,7 +338,12 @@
       <a href="#/category/estate-sale">Estate Sale &amp; Cleanout</a>
       <a href="#/category/junk-removal">Junk Removal</a>
       <a href="#/category/hoarding-biohazard">Hoarding &amp; Biohazard</a>
-      <a href="#" onclick="openFeatureModal(null); return false;">Get a Featured listing</a>
+    </div>
+    <div class="footer-col">
+      <h4>For Businesses</h4>
+      <a href="#/pricing">Get Verified</a>
+      <a href="#/pricing">Advertise with us</a>
+      <a href="#/pricing">Pricing</a>
     </div>
     <div class="footer-col">
       <h4>Company</h4>
@@ -330,15 +363,16 @@
   </div>
 </footer>
 
-<!-- Feature upgrade modal -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <button class="close" onclick="closeFeatureModal()">✕</button>
-    <div id="modalContent"></div>
-  </div>
-</div>
-
 <script>
+const SITE_URL = "https://clearinghousecharlotte.com/";
+
+const WHOP_LINKS = {
+  verified: "https://whop.com/checkout/plan_WOYRb6pgn5PkF",
+  featured: "https://whop.com/checkout/plan_6JRb9EAHoeR9l",
+  sponsor: "https://whop.com/checkout/plan_DtD2PTnFHtZWO",
+  guide: "https://whop.com/checkout/plan_XjNRiq7Of2AYP"
+};
+
 /* ---------------------------------------------------------
    DATA
 --------------------------------------------------------- */
@@ -403,7 +437,7 @@ async function loadData(){
     businesses = await res.json();
   }catch(e){
     console.warn("Could not load listings from the API, showing built-in fallback data.", e);
-    businesses = DEFAULT_BUSINESSES.map(b => ({...b, featured:false}));
+    businesses = DEFAULT_BUSINESSES.map(b => ({...b, verified:false, featured:false, category_sponsor:false}));
   }
   injectBusinessListSchema();
   render();
@@ -420,6 +454,8 @@ function avatarColor(cat){
 }
 function sortForDisplay(list){
   return [...list].sort((a,b)=>{
+    if(a.category_sponsor && !b.category_sponsor) return -1;
+    if(!a.category_sponsor && b.category_sponsor) return 1;
     if(a.featured && !b.featured) return -1;
     if(!a.featured && b.featured) return 1;
     return a.name.localeCompare(b.name);
@@ -439,13 +475,13 @@ function cardHtml(b){
   const cat = CATEGORIES[b.category];
   return `
   <a href="#/listing/${b.id}" class="card" style="text-decoration:none;">
-    ${b.featured ? `<div class="featured-pill">★ Featured</div>` : ``}
+    ${b.category_sponsor ? `<div class="featured-pill sponsor">★ Sponsor</div>` : b.featured ? `<div class="featured-pill">★ Featured</div>` : ``}
     <div class="folder-tab ${b.category}">${cat.short}</div>
     <div class="card-body">
       <div class="card-top">
         <div class="avatar" style="background:${avatarColor(b.category)}">${initials(b.name)}</div>
         <div>
-          <h3>${escapeHtml(b.name)}</h3>
+          <h3>${escapeHtml(b.name)}${b.verified ? `<span class="verified-check" title="Verified listing">✓</span>` : ``}</h3>
           <div class="loc">${escapeHtml(b.city)}</div>
         </div>
       </div>
@@ -471,6 +507,7 @@ function currentRoute(){
   const search = h.match(/^#\/search\?q=(.*)$/);
   if(search) return {page:"search", q: decodeURIComponent(search[1])};
   if(h === "#/about") return {page:"about"};
+  if(h === "#/pricing") return {page:"pricing"};
   if(h === "#/contact") return {page:"contact"};
   if(h === "#/faq") return {page:"faq"};
   if(h === "#/privacy") return {page:"privacy"};
@@ -483,7 +520,7 @@ function renderTopNav(activeSlug){
   const catLinks = Object.entries(CATEGORIES).map(([slug,c]) => `
     <a href="#/category/${slug}" class="${slug===activeSlug ? 'active':''}">${c.short}</a>
   `).join("");
-  const infoLinks = ["about","contact","faq"].map(p => `
+  const infoLinks = ["about","pricing","contact","faq"].map(p => `
     <a href="#/${p}" class="${route.page===p ? 'active':''}" style="text-transform:capitalize;">${p}</a>
   `).join("");
   el.innerHTML = catLinks + `<span style="width:1px; background:var(--line); margin:0 4px;"></span>` + infoLinks;
@@ -497,6 +534,7 @@ function render(){
   else if(route.page === "listing"){ renderTopNav(null); app.innerHTML = renderListing(route.id); }
   else if(route.page === "search"){ renderTopNav(null); app.innerHTML = renderSearch(route.q); attachSearchHandler(); }
   else if(route.page === "about"){ renderTopNav(null); app.innerHTML = renderAbout(); }
+  else if(route.page === "pricing"){ renderTopNav(null); app.innerHTML = renderPricing(); }
   else if(route.page === "contact"){ renderTopNav(null); app.innerHTML = renderContact(); }
   else if(route.page === "faq"){ renderTopNav(null); app.innerHTML = renderFAQ(); }
   else if(route.page === "privacy"){ renderTopNav(null); app.innerHTML = renderPrivacy(); }
@@ -538,6 +576,14 @@ function renderHome(){
         <span>Direct phone numbers — call today, no lead forms</span>
       </div>
     </div>
+    <div class="guide-promo">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--rust); margin-bottom:6px;">Digital guide</div>
+        <h3>The Family Guide to Estate Cleanouts</h3>
+        <p>A step-by-step manual for families and executors — organize the home, value possessions, and manage logistics without the stress. Instant digital download.</p>
+      </div>
+      <a class="btn brass" href="${WHOP_LINKS.guide}" target="_blank" rel="noopener noreferrer">Get the Guide — $19.97</a>
+    </div>
     <div class="tiles">${tiles}</div>
 
     ${featured.length ? `
@@ -558,7 +604,8 @@ function renderCategory(slug){
   if(!cat) return renderHome();
   const inCategory = businesses.filter(b=>b.category===slug);
   const list = sortForDisplay(inCategory);
-  const featured = list.filter(b=>b.featured);
+  const sponsor = list.filter(b=>b.category_sponsor);
+  const featured = list.filter(b=>b.featured && !b.category_sponsor);
   return `
     <div class="hero" style="padding-bottom:8px;">
       <div class="eyebrow">${inCategory.length} businesses</div>
@@ -569,6 +616,11 @@ function renderCategory(slug){
         <button type="submit">Search</button>
       </form>
     </div>
+
+    ${sponsor.length ? `
+    <div class="section-head"><h2>Category Sponsor</h2><div class="meta">exclusive placement</div></div>
+    <div class="grid">${sponsor.map(cardHtml).join("")}</div>
+    ` : ``}
 
     ${featured.length ? `
     <div class="section-head"><h2>Featured</h2><div class="meta">sponsored placement</div></div>
@@ -635,7 +687,9 @@ function renderListing(id){
           <h1>${escapeHtml(b.name)}</h1>
           <div class="badges">
             <span class="badge ${b.category}">${cat.short}</span>
+            ${b.category_sponsor ? `<span class="badge sponsor">★ Category Sponsor</span>` : ``}
             ${b.featured ? `<span class="badge featured">★ Featured</span>` : ``}
+            ${b.verified ? `<span class="badge verified">✓ Verified</span>` : ``}
             <span class="mono" style="font-size:12px; color:var(--ink-soft);">${escapeHtml(b.city)}</span>
           </div>
         </div>
@@ -673,13 +727,70 @@ function renderAbout(){
       <h2>Why we built this</h2>
       <p>Searching "estate sale charlotte nc" or "estate sale cleanout charlotte nc" turns up a mix of individual sale listings, national franchises, and one-person hauling crews — with no easy way to tell which type of help you actually need. We built The Clearing House to separate <strong>estate sale &amp; cleanout services</strong> (companies that appraise, price, and sell the contents of a home) from <strong>junk removal</strong> (crews that haul away what's left) and <strong>hoarding &amp; biohazard cleanup</strong> (specialists for extreme or hazardous situations) — so you can find the right kind of estate sale service in Charlotte NC, Rock Hill SC, and the surrounding metro without guessing.</p>
       <h2>How listings work</h2>
-      <p>Businesses are organized by category and searchable by name, city, or service. A Featured Listing upgrade lets a business appear at the top of the homepage and its category page — featured placement is clearly labeled, and it never replaces or hides a business's basic listing.</p>
+      <p>Businesses are organized by category and searchable by name, city, or service. Every business gets a free basic listing. Optional paid upgrades — Verified, Featured, and Category Sponsor, described on the <a class="inline" href="#/pricing">pricing page</a> — move a business higher on the homepage and its category page. All of them are clearly labeled, and none ever replace or hide a business's basic listing.</p>
       <h2>Who runs it</h2>
       <p>The Clearing House is published and maintained by <strong>Dominate Your Brand LLC</strong>. Our contact person for the directory is <strong>Curtis Waters</strong> — reach out any time through the <a class="inline" href="#/contact">contact page</a> with questions, corrections, or a listing to add.</p>
       <h2>A note on estate sale planning</h2>
       <p>If you're just starting estate sale planning — figuring out whether to run a sale, hire a liquidator, or go straight to a cleanout crew — the <a class="inline" href="#/faq">FAQ page</a> walks through how each category of business fits into that process.</p>
     </div>
   </div>`;
+}
+
+/* ---------------------------------------------------------
+   PAGE: PRICING
+--------------------------------------------------------- */
+function renderPricing(){
+  return `
+  <div class="hero" style="padding-bottom:8px;">
+    <div class="eyebrow">For businesses</div>
+    <h1>Get seen first in the Charlotte directory</h1>
+    <p class="sub">Every business can have a free basic listing. These upgrades add credibility and visibility for businesses that want more calls from this directory.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <h3>Verified Listing</h3>
+      <div class="price">$49<span>/month</span></div>
+      <div class="price-note">Cancel anytime</div>
+      <ul>
+        <li>"Verified" badge next to your business name</li>
+        <li>Contact info and service area manually confirmed</li>
+        <li>Builds trust with visitors comparing multiple companies</li>
+        <li>Required before adding Featured Profile or Category Sponsor</li>
+      </ul>
+      <a class="btn" href="${WHOP_LINKS.verified}" target="_blank" rel="noopener noreferrer">Get Verified</a>
+    </div>
+    <div class="pricing-card highlight">
+      <div class="ribbon">Most popular</div>
+      <h3>Featured Profile</h3>
+      <div class="price">+$49<span>/month</span></div>
+      <div class="price-note">Add-on to Verified Listing — $98/mo total if you're not already Verified. Cancel anytime.</div>
+      <ul>
+        <li>Top placement on the homepage and your category page</li>
+        <li>★ Featured badge on your listing card and profile</li>
+        <li>Shown above all standard listings in your category</li>
+        <li>Includes everything in Verified Listing</li>
+      </ul>
+      <a class="btn brass" href="${WHOP_LINKS.featured}" target="_blank" rel="noopener noreferrer">Add Featured</a>
+    </div>
+    <div class="pricing-card">
+      <h3>Category Sponsor</h3>
+      <div class="price">$250<span>/month</span></div>
+      <div class="price-note">Exclusive — only 1 business per category. Cancel anytime.</div>
+      <ul>
+        <li>The only sponsor shown in your category — no competitors</li>
+        <li>Top-of-category placement, above Featured listings</li>
+        <li>Includes everything in Verified Listing and Featured Profile</li>
+        <li>Locks in your category; waitlisted if already taken</li>
+      </ul>
+      <a class="btn" href="${WHOP_LINKS.sponsor}" target="_blank" rel="noopener noreferrer">Inquire about sponsorship</a>
+    </div>
+  </div>
+  <div class="info-panel" style="max-width:780px; margin:40px auto 0;">
+    <h2>How this works</h2>
+    <p>Pick a plan above — it opens secure checkout on Whop in a new tab, so you won't lose your place on this site. Once payment goes through, <a class="inline" href="#/contact">let us know</a> and we'll turn on the upgrade for your listing shortly after.</p>
+    <p>Every listed business keeps a free basic entry in the directory regardless of these upgrades — Verified, Featured, and Category Sponsor are optional ways to stand out, not a requirement to be listed.</p>
+  </div>
+  `;
 }
 
 /* ---------------------------------------------------------
@@ -765,8 +876,8 @@ const FAQ_ITEMS = [
     a: "Pricing varies by company and typically depends on how the sale is structured — a commission on items sold, a flat fee, or an hourly rate for cleanout labor. We don't set or collect pricing; contact a listed business directly for a quote specific to your home."
   },
   {
-    q: "What does a 'Featured' listing mean?",
-    a: "A Featured Listing is a paid upgrade ($30/month) that moves a business to the top of the homepage and its category page. It's clearly marked with a Featured badge and doesn't affect the accuracy of the listing information itself."
+    q: "What do 'Verified', 'Featured', and 'Category Sponsor' mean?",
+    a: "These are paid upgrades a business can add to its free listing — see the <a class=\"inline\" href=\"#/pricing\">pricing page</a> for details and current rates. Verified means we've manually confirmed the business's contact info and service area. Featured moves a business to the top of the homepage and its category page. Category Sponsor is an exclusive top-of-category placement, limited to one business per category. None of these affect the accuracy of the listing information itself."
   },
   {
     q: "I run an estate sale or cleanout company in Charlotte — how do I get listed?",
@@ -810,8 +921,8 @@ function renderPrivacy(){
       <h2>Information we collect</h2>
       <p>We collect information in a few limited ways:</p>
       <ul>
-        <li><strong>Contact form submissions.</strong> If you use the contact page, your name, email address, and message are sent directly to our inbox via your own email client — we do not store form submissions on this website.</li>
-        <li><strong>Featured Listing payments.</strong> If a business purchases a Featured Listing upgrade, payment details are processed by our payment provider; we do not store full card numbers on our own servers.</li>
+        <li><strong>Contact form submissions.</strong> If you use the contact page, your name, email address, and message are sent to our inbox by our server; we do not otherwise store form submissions on this website.</li>
+        <li><strong>Verified, Featured, and Category Sponsor payments.</strong> If a business purchases one of these upgrades, checkout is handled entirely by our payment provider (Whop) on their own site; we do not process or store payment details on our own servers.</li>
         <li><strong>Basic usage data.</strong> Like most websites, our hosting and analytics tools may automatically log standard technical information such as browser type, device type, and pages visited, used only to understand how the directory is used and to keep it running reliably.</li>
       </ul>
 
@@ -838,62 +949,6 @@ function renderPrivacy(){
 }
 
 /* ---------------------------------------------------------
-   FEATURE UPGRADE MODAL (mock Stripe checkout)
---------------------------------------------------------- */
-function openFeatureModal(id){
-  const overlay = document.getElementById("modalOverlay");
-  const content = document.getElementById("modalContent");
-  const options = businesses.map(b => `<option value="${b.id}" ${b.id===id?'selected':''}>${escapeHtml(b.name)}</option>`).join("");
-  content.innerHTML = `
-    <h3>Get Featured</h3>
-    <p class="lead">Featured listings appear first on the homepage and at the top of their category — a simple way for a business to stand out.</p>
-    <div class="plan-box">
-      <div><div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-soft); text-transform:uppercase;">Featured Listing</div><div class="price">$30<span>/month</span></div></div>
-      <div class="mono" style="font-size:11px; color:var(--ink-soft);">cancel anytime</div>
-    </div>
-    <form onsubmit="return submitFeatureForm(event)">
-      <div class="field-group">
-        <label class="field">Business</label>
-        <select class="stripe-input" id="featureBusinessSelect" style="font-family:'Inter',sans-serif;">${options}</select>
-      </div>
-      <button type="submit" class="btn brass" style="width:100%; margin-top:6px;">Continue to secure checkout</button>
-    </form>
-    <div class="stripe-badge">🔒 Payment is handled by Stripe — card details are entered on Stripe's own page, never on this site.</div>
-  `;
-  overlay.classList.add("open");
-}
-function closeFeatureModal(){
-  document.getElementById("modalOverlay").classList.remove("open");
-}
-async function submitFeatureForm(e){
-  e.preventDefault();
-  const select = document.getElementById("featureBusinessSelect");
-  const id = select.value;
-  const btn = e.target.querySelector("button[type=submit]");
-  btn.textContent = "Redirecting to Stripe…";
-  btn.disabled = true;
-  try{
-    const res = await fetch("api/create-checkout-session.php", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({id})
-    });
-    const data = await res.json();
-    if(!res.ok || !data.url) throw new Error(data.error || "Could not start checkout");
-    window.location.href = data.url;
-  }catch(err){
-    console.warn("Could not start checkout.", err);
-    btn.textContent = "Continue to secure checkout";
-    btn.disabled = false;
-    alert("Something went wrong starting checkout. Please try again.");
-  }
-  return false;
-}
-document.getElementById("modalOverlay").addEventListener("click", (e)=>{
-  if(e.target.id === "modalOverlay") closeFeatureModal();
-});
-
-/* ---------------------------------------------------------
    STRUCTURED DATA (JSON-LD)
 --------------------------------------------------------- */
 function setJsonLd(id, data){
@@ -915,30 +970,28 @@ function parseCityState(cityStr){
   return { locality, region };
 }
 function injectSiteSchema(){
-  const origin = window.location.origin + window.location.pathname;
   setJsonLd("ld-site", {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
-        "@id": origin + "#organization",
+        "@id": SITE_URL + "#organization",
         "name": "The Clearing House",
-        "url": origin,
+        "url": SITE_URL,
         "description": "A directory of estate sale cleanout, junk removal, and hoarding/biohazard cleanup companies serving the Charlotte, NC metro area.",
         "areaServed": { "@type": "City", "name": "Charlotte" }
       },
       {
         "@type": "WebSite",
-        "@id": origin + "#website",
-        "url": origin,
+        "@id": SITE_URL + "#website",
+        "url": SITE_URL,
         "name": "The Clearing House",
-        "publisher": { "@id": origin + "#organization" }
+        "publisher": { "@id": SITE_URL + "#organization" }
       }
     ]
   });
 }
 function injectBusinessListSchema(){
-  const origin = window.location.origin + window.location.pathname;
   setJsonLd("ld-businesses", {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -951,7 +1004,7 @@ function injectBusinessListSchema(){
         "telephone": b.phone,
         "category": CATEGORIES[b.category] ? CATEGORIES[b.category].short : b.category,
         "description": b.oneliner,
-        "url": origin + "#/listing/" + b.id,
+        "url": SITE_URL + "#/listing/" + b.id,
         "address": {
           "@type": "PostalAddress",
           "addressLocality": locality,
@@ -980,37 +1033,10 @@ function injectFaqSchema(){
 }
 
 /* ---------------------------------------------------------
-   CHECKOUT RETURN — Stripe redirects back here after success/cancel
---------------------------------------------------------- */
-function handleCheckoutReturn(){
-  const params = new URLSearchParams(window.location.search);
-  const status = params.get("checkout");
-  if(status){
-    if(status === "success"){
-      const b = businesses.find(x=>x.id===params.get("business"));
-      const name = b ? b.name : "Your listing";
-      document.getElementById("modalContent").innerHTML = `
-        <div class="success-box">
-          <div class="mark">✓</div>
-          <h3>Payment received</h3>
-          <p class="lead">Thanks! ${escapeHtml(name)} will appear as Featured within a minute or two, once Stripe confirms the subscription.</p>
-          <button class="btn" style="width:100%;" onclick="closeFeatureModal();">Done</button>
-        </div>
-      `;
-      document.getElementById("modalOverlay").classList.add("open");
-    }
-    const url = new URL(window.location.href);
-    url.searchParams.delete("checkout");
-    url.searchParams.delete("business");
-    history.replaceState({}, "", url.toString());
-  }
-}
-
-/* ---------------------------------------------------------
    INIT
 --------------------------------------------------------- */
 injectSiteSchema();
-loadData().then(handleCheckoutReturn);
+loadData();
 </script>
 </body>
 </html>

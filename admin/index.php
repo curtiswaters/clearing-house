@@ -26,6 +26,17 @@ function checkCsrf(?string $token): bool {
 function h(string $s): string {
   return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 }
+function sponsorTaken(PDO $pdo, string $category, ?string $excludeId): bool {
+  $sql = 'SELECT id FROM businesses WHERE category = ? AND category_sponsor = 1';
+  $params = [$category];
+  if ($excludeId !== null) {
+    $sql .= ' AND id != ?';
+    $params[] = $excludeId;
+  }
+  $stmt = $pdo->prepare($sql . ' LIMIT 1');
+  $stmt->execute($params);
+  return (bool) $stmt->fetch();
+}
 
 $error = '';
 
@@ -70,19 +81,23 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '')
       $website = trim($_POST['website'] ?? '') ?: null;
       $oneliner = trim($_POST['oneliner'] ?? '');
       $description = trim($_POST['description'] ?? '');
+      $verified = isset($_POST['verified']) ? 1 : 0;
       $featured = isset($_POST['featured']) ? 1 : 0;
+      $categorySponsor = isset($_POST['category_sponsor']) ? 1 : 0;
 
       if (!preg_match('/^[a-z0-9-]+$/', $id)) {
         $error = 'ID must be lowercase letters, numbers, and hyphens only.';
       } elseif ($name === '' || !isset(CATEGORIES[$category]) || $phone === '' || $city === '') {
         $error = 'Name, category, phone, and city are required.';
+      } elseif ($categorySponsor && sponsorTaken($pdo, $category, $isNew ? null : $id)) {
+        $error = 'Another business already sponsors this category. Remove their sponsorship first.';
       } else {
         if ($isNew) {
-          $stmt = $pdo->prepare('INSERT INTO businesses (id, name, category, phone, city, website, oneliner, description, featured) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
-          $stmt->execute([$id, $name, $category, $phone, $city, $website, $oneliner, $description, $featured]);
+          $stmt = $pdo->prepare('INSERT INTO businesses (id, name, category, phone, city, website, oneliner, description, verified, featured, category_sponsor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+          $stmt->execute([$id, $name, $category, $phone, $city, $website, $oneliner, $description, $verified, $featured, $categorySponsor]);
         } else {
-          $stmt = $pdo->prepare('UPDATE businesses SET name=?, category=?, phone=?, city=?, website=?, oneliner=?, description=?, featured=? WHERE id=?');
-          $stmt->execute([$name, $category, $phone, $city, $website, $oneliner, $description, $featured, $id]);
+          $stmt = $pdo->prepare('UPDATE businesses SET name=?, category=?, phone=?, city=?, website=?, oneliner=?, description=?, verified=?, featured=?, category_sponsor=? WHERE id=?');
+          $stmt->execute([$name, $category, $phone, $city, $website, $oneliner, $description, $verified, $featured, $categorySponsor, $id]);
         }
         header('Location: index.php');
         exit;
@@ -127,7 +142,10 @@ $businesses = $authed ? $pdo->query('SELECT * FROM businesses ORDER BY category,
   .btn.link{ background: none; color: #2B3A4A; text-decoration: underline; padding: 0; }
   .error{ background: #fbe4e0; border: 1px solid #A6432A; padding: 10px 14px; border-radius: 3px; margin-bottom: 16px; }
   .topbar{ display: flex; justify-content: space-between; align-items: center; }
-  .featured-yes{ color: #A6782C; font-weight: 600; }
+  .status-badge{ display:inline-block; font-size:11px; font-weight:600; padding:2px 7px; border-radius:10px; margin:0 4px 4px 0; }
+  .status-badge.verified{ background:#e3ecf3; color:#2B3A4A; }
+  .status-badge.featured{ background:#f5e9d3; color:#A6782C; }
+  .status-badge.sponsor{ background:#f6dcd4; color:#A6432A; }
 </style>
 </head>
 <body>
@@ -185,7 +203,9 @@ $businesses = $authed ? $pdo->query('SELECT * FROM businesses ORDER BY category,
     <label>Description (shown on the listing page)</label>
     <textarea name="description"><?= h($editing['description'] ?? '') ?></textarea>
 
-    <label><input type="checkbox" name="featured" <?= !empty($editing['featured']) ? 'checked' : '' ?> style="width:auto;"> Featured</label>
+    <label><input type="checkbox" name="verified" <?= !empty($editing['verified']) ? 'checked' : '' ?> style="width:auto;"> Verified ($49/mo)</label>
+    <label><input type="checkbox" name="featured" <?= !empty($editing['featured']) ? 'checked' : '' ?> style="width:auto;"> Featured (+$49/mo, expects Verified)</label>
+    <label><input type="checkbox" name="category_sponsor" <?= !empty($editing['category_sponsor']) ? 'checked' : '' ?> style="width:auto;"> Category Sponsor ($250/mo, 1 per category)</label>
 
     <p>
       <button class="btn" type="submit">Save</button>
@@ -204,14 +224,19 @@ $businesses = $authed ? $pdo->query('SELECT * FROM businesses ORDER BY category,
   </div>
 
   <table>
-    <tr><th>Name</th><th>Category</th><th>City</th><th>Website</th><th>Featured</th><th></th></tr>
+    <tr><th>Name</th><th>Category</th><th>City</th><th>Website</th><th>Status</th><th></th></tr>
     <?php foreach ($businesses as $b): ?>
       <tr>
         <td><?= h($b['name']) ?></td>
         <td><?= h(CATEGORIES[$b['category']] ?? $b['category']) ?></td>
         <td><?= h($b['city']) ?></td>
         <td><?= $b['website'] ? '<a href="' . h((preg_match('/^https?:\/\//i', $b['website']) ? '' : 'https://') . $b['website']) . '" target="_blank" rel="noopener noreferrer">' . h($b['website']) . '</a>' : '—' ?></td>
-        <td><?= $b['featured'] ? '<span class="featured-yes">Yes</span>' : 'No' ?></td>
+        <td>
+          <?php if ($b['category_sponsor']): ?><span class="status-badge sponsor">Sponsor</span><?php endif; ?>
+          <?php if ($b['featured']): ?><span class="status-badge featured">Featured</span><?php endif; ?>
+          <?php if ($b['verified']): ?><span class="status-badge verified">Verified</span><?php endif; ?>
+          <?php if (!$b['verified'] && !$b['featured'] && !$b['category_sponsor']): ?>—<?php endif; ?>
+        </td>
         <td>
           <a href="?edit=<?= urlencode($b['id']) ?>">Edit</a>
           &nbsp;·&nbsp;

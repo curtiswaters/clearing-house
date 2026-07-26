@@ -11,18 +11,12 @@ return [
   'user' => 'cpaneluser_dbuser',
   'pass' => 'change-me',
 
-  // From your Stripe Dashboard → Developers → API keys / Webhooks.
-  // Use test-mode keys (sk_test_.../pk_test_...) until you're ready to go live.
-  'stripe_secret_key'      => 'sk_test_...',
-  'stripe_publishable_key' => 'pk_test_...',
-  'stripe_webhook_secret'  => 'whsec_...',
-
   // Contact form (api/contact.php). contact_from_email should be a mailbox
-  // on your own domain (e.g. noreply@yourdomain.com) — most cPanel mail
-  // setups will flag or reject mail sent "from" an address on another
-  // domain. contact_to_email is where messages actually get delivered.
+  // on your own domain — most cPanel mail setups will flag or reject mail
+  // sent "from" an address on another domain. contact_to_email is where
+  // messages actually get delivered.
   'contact_to_email'   => 'info@dominatewithbrand.com',
-  'contact_from_email' => 'noreply@yourdomain.com',
+  'contact_from_email' => 'noreply@clearinghousecharlotte.com',
 
   // Password for /admin/ (editing listings). Generate a hash with:
   //   php -r "echo password_hash('your-password-here', PASSWORD_DEFAULT), \"\n\";"
