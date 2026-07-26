@@ -8,13 +8,25 @@ Contact: Curtis Waters · info@dominatewithbrand.com · (704) 345-2964
 
 ## What's in this repo
 
-- `index.html` — the entire site (homepage, category pages, listing pages,
-  About, Pricing, Contact, FAQ, and Privacy Policy). It's a single static
-  HTML file with inline CSS and JS, using hash-based client-side routing
-  (`#/`, `#/category/...`, `#/listing/...`, `#/about`, `#/pricing`,
-  `#/contact`, `#/faq`, `#/privacy`).
-- `hero_estatedir1.webp` — the homepage hero image. Must stay in the same folder
-  as `index.html` (referenced by a relative path).
+- `index.html` — the homepage plus the SPA for About, Pricing, Contact, FAQ,
+  and Privacy Policy, using hash-based client-side routing (`#/about`,
+  `#/pricing`, `#/contact`, `#/faq`, `#/privacy`, `#/search`). Category and
+  listing pages used to live here too (`#/category/...`, `#/listing/...`);
+  they're now real server-rendered pages — see "Routing" below — and
+  index.html's router just redirects those old hash routes to the new URLs.
+- `category.php` / `listing.php` — server-rendered pages for
+  `/category/{slug}/` and `/listing/{id}/`, each with its own title, meta
+  description, canonical URL, and JSON-LD. See "Routing" below.
+- `style.css` — shared styles for every page (`index.html`, `category.php`,
+  `listing.php`) so they look identical without duplicating a stylesheet
+  per file.
+- `partials/` — PHP includes shared by `category.php` and `listing.php`:
+  `categories.php` (category metadata), `render-helpers.php` (escaping,
+  card markup, sorting — the PHP equivalents of `index.html`'s JS helpers),
+  `header.php`, `footer.php`.
+- `.htaccess` — rewrites pretty URLs (`/category/{slug}/`, `/listing/{id}/`,
+  `/sitemap.xml`) to the PHP scripts that actually handle them.
+- `hero_estatedir1.webp` — the homepage hero image.
 - `api/` — PHP endpoints backing the listing data and contact form
   (`listings.php`, `contact.php`, `db.php`, `config.example.php`). Requires
   PHP + MySQL, e.g. a cPanel hosting plan. Paid upgrades checkout happens
@@ -24,9 +36,11 @@ Contact: Curtis Waters · info@dominatewithbrand.com · (704) 345-2964
 - `admin/` — password-protected panel (`admin/index.php`) for adding, editing,
   deleting, and toggling Verified/Featured/Category Sponsor status on
   listings without touching SQL directly.
-- `sitemap.xml`, `robots.txt`, `llms.txt` — SEO/discovery files for
-  `clearinghousecharlotte.com` (the site's canonical domain). See SEO below
-  for why these are deliberately minimal.
+- `sitemap.php`, `robots.txt`, `llms.txt` — SEO/discovery files for
+  `clearinghousecharlotte.com` (the site's canonical domain). `sitemap.php`
+  is served at `/sitemap.xml` via `.htaccess` and generates itself fresh
+  from the database on every request (homepage + every category + every
+  listing), so it can't go stale the way a hand-written file would.
 
 ## Running locally
 
@@ -50,8 +64,9 @@ of one-time setup steps are required in addition to uploading files.
 
 1. **Upload the files**: via File Manager/FTP or cPanel's Git Version Control
    (Settings → clone this repo with the repository path set to the desired
-   document root), get `index.html`, `hero_estatedir1.webp`, `api/`, and
-   `sql/` onto the server, e.g. into `public_html`.
+   document root), get the whole repo onto the server, e.g. into
+   `public_html`. Make sure `.htaccess` comes along — it's a dotfile, so
+   confirm your upload method doesn't skip hidden files.
 2. **Create the database**: in cPanel → MySQL® Databases, create a database
    and a user with full privileges on it.
 3. **Configure the connection**: copy `api/config.example.php` to
@@ -79,9 +94,47 @@ of one-time setup steps are required in addition to uploading files.
    since the login form has no other protection against the password being
    read off the network.
 
-No `.htaccess` rewrite rules are needed for routing — the site uses
-hash-based client-side routing (`#/`, `#/category/...`, etc.), so every route
-resolves to the same `index.html`.
+`.htaccess` needs `mod_rewrite` enabled, which is the default on cPanel/NameHero
+shared hosting — nothing to configure there.
+
+## Routing
+
+Category and listing pages are real, independently crawlable URLs, not hash
+fragments in the SPA:
+
+- `/category/{slug}/` → rewritten by `.htaccess` to `category.php?slug={slug}`
+- `/listing/{id}/` → rewritten to `listing.php?id={id}`
+
+Each of those scripts queries the `businesses` table directly (via
+`api/db.php`) and renders a complete HTML page server-side — its own
+`<title>`, meta description, canonical URL, and JSON-LD (`LocalBusiness` for
+a listing page) — so a crawler sees real, page-specific content without
+executing any JavaScript. They share `partials/header.php`,
+`partials/footer.php`, and `style.css` with `index.html` so the site looks
+identical whether a page came from the SPA or from PHP.
+
+About, Pricing, Contact, FAQ, Privacy, and Search are deliberately **not**
+part of this — they stay as hash routes inside `index.html`'s SPA, since
+none of them are the long-tail search traffic this change targets (a
+specific business's name, or "estate sale companies in Charlotte NC," not
+"The Clearing House FAQ"). They could get the same treatment later if that
+changes.
+
+Old links to `#/category/{slug}` or `#/listing/{id}` (e.g. anything already
+indexed or bookmarked from before this change) still work — `index.html`'s
+router detects them and redirects to the new real URL via
+`location.replace()`.
+
+`category.php` and `listing.php`'s search boxes submit a plain GET to `/`
+(they have no router of their own), and `index.html` picks up the `?q=`
+parameter on load and redirects into its own `#/search?q=...` route.
+
+Duplicating markup logic between JS (`index.html`) and PHP
+(`partials/render-helpers.php`) is an accepted tradeoff here — a single
+shared templating layer across both would be a bigger rewrite than this
+project's size and traffic justify. If the two ever visibly drift (e.g. a
+badge added to one card renderer and not the other), that's the place to
+look.
 
 ## Data persistence
 
@@ -131,9 +184,9 @@ for the one required config value (`contact_from_email`).
 framework) for listing management: add, edit, delete, and toggle Verified,
 Featured, and Category Sponsor directly, without writing SQL. Checking
 Category Sponsor for a business is blocked with an error if another
-business in the same category already has it — the same exclusivity rule
-`create-checkout-session.php` enforces for paid signups. The panel is
-protected by one shared password (`admin_password_hash` in `api/config.php`)
+business in the same category already has it — see "Known limitations"
+below for why this check only exists here and not on the Whop side. The
+panel is protected by one shared password (`admin_password_hash` in `api/config.php`)
 plus a CSRF token on every write and a short delay after repeated failed
 logins — reasonable for a single site owner, but not meant for multiple
 admin users or a public-facing login at scale.
@@ -154,32 +207,23 @@ The site's canonical domain, `https://clearinghousecharlotte.com/`, is
 hardcoded in a few places rather than derived at runtime:
 
 - `<link rel="canonical">` and the Open Graph/Twitter meta tags in
-  `index.html`'s `<head>`.
-- The `SITE_URL` constant near the top of `index.html`'s `<script>`, used to
-  build every URL in the JSON-LD structured data (Organization, WebSite,
-  ItemList of businesses, FAQPage).
-- `sitemap.xml`, `robots.txt` (which points at the sitemap), and `llms.txt`.
+  `index.html`, `category.php`, and `listing.php`.
+- The `SITE_URL` constant near the top of `index.html`'s `<script>` (used to
+  build the JSON-LD in the SPA) and the `$siteUrl` variable in `sitemap.php`.
+- `robots.txt` (which points at the sitemap) and `llms.txt`.
 
 If the domain ever changes, all of these need updating — search `clearinghousecharlotte.com` across the repo.
 
-**Sitemap limitation, on purpose**: `sitemap.xml` lists exactly one URL (the
-homepage). This isn't an oversight — the whole site is one HTML document
-using hash-based client routing (`#/category/...`, `#/listing/...`), and URL
-fragments are never sent to the server, so search engines can't crawl or
-index them as separate pages. That means category and listing pages
-currently can't rank individually in search results, which matters a lot for
-a local directory whose value is largely in those listing pages showing up
-for searches like a specific company's name. Fixing this for real would mean
-giving categories and listings real server-side paths (e.g. via a small PHP
-router reading from the `businesses` table) instead of hash fragments — a
-bigger change than adding a sitemap, and worth doing deliberately rather than
-as a side effect of this task.
-
-`llms.txt` works around the same limitation for AI/LLM tools by embedding
-the actual business data (name, phone, city, website, one-liner) as plain
-text rather than only linking to hash-fragment URLs those tools likely can't
-fetch. It's a manually-maintained snapshot, so it will drift from the live
-database over time as listings are added or edited via `/admin/`.
+Category and listing pages are real URLs now (see "Routing" above), and
+`/sitemap.xml` lists every one of them, generated fresh from the database on
+each request — so this no longer has the single-URL limitation an earlier
+version of this README described. `llms.txt` still exists alongside it:
+`sitemap.xml`/real URLs help traditional crawlers, but `llms.txt` is aimed
+at simpler LLM/agent fetchers that may not execute JavaScript at all — it
+embeds business data as plain text so that content doesn't require any
+crawling or rendering to be readable. It's a manually-maintained snapshot,
+so unlike the sitemap, it will drift from the live database over time as
+listings are added or edited via `/admin/`.
 
 ## Known limitations to address before going live
 
