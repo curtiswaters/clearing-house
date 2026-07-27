@@ -1,18 +1,24 @@
 <?php
 /**
  * Dynamic sitemap, served at /sitemap.xml via .htaccess rewrite. Lists the
- * homepage, every category, and every business listing — regenerated on
- * each request from the businesses table, so it never goes stale like a
- * hand-maintained static file would.
+ * homepage, every category, every business listing, and every guide —
+ * regenerated on each request from the businesses table (and the guide
+ * content file), so it never goes stale like a hand-maintained file would.
  */
+define('CH_APP', true);
 header('Content-Type: application/xml; charset=UTF-8');
 require __DIR__ . '/api/db.php';
+$guides = require __DIR__ . '/partials/guide-content.php';
 
 $siteUrl = 'https://clearinghousecharlotte.com/';
-$urls = [$siteUrl];
+$urls = [$siteUrl, $siteUrl . 'guides/'];
 
 foreach (['estate-sale', 'junk-removal', 'hoarding-biohazard'] as $slug) {
   $urls[] = $siteUrl . 'category/' . $slug . '/';
+}
+
+foreach (array_keys($guides) as $slug) {
+  $urls[] = $siteUrl . 'guides/' . $slug . '/';
 }
 
 $rows = $pdo->query('SELECT id FROM businesses')->fetchAll();

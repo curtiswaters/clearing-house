@@ -16,6 +16,7 @@ $activeCategorySlug = $activeCategorySlug ?? null;
       <?php foreach ($categories as $slug => $c): ?>
         <a href="/category/<?= h($slug) ?>/" class="<?= $slug === $activeCategorySlug ? 'active' : '' ?>"><?= h($c['short']) ?></a>
       <?php endforeach; ?>
+      <a href="/guides/">Guides</a>
       <span style="width:1px; background:var(--line); margin:0 4px;"></span>
       <a href="/#/about" style="text-transform:capitalize;">about</a>
       <a href="/#/pricing" style="text-transform:capitalize;">pricing</a>

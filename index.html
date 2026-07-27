@@ -58,6 +58,7 @@
       <a href="/category/estate-sale/">Estate Sale &amp; Cleanout</a>
       <a href="/category/junk-removal/">Junk Removal</a>
       <a href="/category/hoarding-biohazard/">Hoarding &amp; Biohazard</a>
+      <a href="/guides/">Guides</a>
     </div>
     <div class="footer-col">
       <h4>For Businesses</h4>
@@ -240,7 +241,7 @@ function renderTopNav(){
   const infoLinks = ["about","pricing","contact","faq"].map(p => `
     <a href="#/${p}" class="${route.page===p ? 'active':''}" style="text-transform:capitalize;">${p}</a>
   `).join("");
-  el.innerHTML = catLinks + `<span style="width:1px; background:var(--line); margin:0 4px;"></span>` + infoLinks;
+  el.innerHTML = catLinks + `<a href="/guides/">Guides</a><span style="width:1px; background:var(--line); margin:0 4px;"></span>` + infoLinks;
 }
 
 function render(){

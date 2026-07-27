@@ -1,6 +1,9 @@
 <?php
 if (!defined('CH_APP')) { http_response_code(403); exit; }
 
+// Keep in sync with WHOP_LINKS.guide in index.html's <script>.
+define('WHOP_GUIDE_LINK', 'https://whop.com/checkout/plan_XjNRiq7Of2AYP');
+
 function h($s): string {
   return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
 }

@@ -12,6 +12,7 @@ if (!defined('CH_APP')) { http_response_code(403); exit; }
       <a href="/category/estate-sale/">Estate Sale &amp; Cleanout</a>
       <a href="/category/junk-removal/">Junk Removal</a>
       <a href="/category/hoarding-biohazard/">Hoarding &amp; Biohazard</a>
+      <a href="/guides/">Guides</a>
     </div>
     <div class="footer-col">
       <h4>For Businesses</h4>

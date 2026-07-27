@@ -17,15 +17,21 @@ Contact: Curtis Waters · info@dominatewithbrand.com · (704) 345-2964
 - `category.php` / `listing.php` — server-rendered pages for
   `/category/{slug}/` and `/listing/{id}/`, each with its own title, meta
   description, canonical URL, and JSON-LD. See "Routing" below.
+- `guides.php` / `guide.php` — server-rendered free articles at `/guides/`
+  and `/guides/{slug}/`, adapted from chapters of the paid "Family Guide to
+  Estate Cleanouts" (sold on Whop). See "Guides" below.
 - `style.css` — shared styles for every page (`index.html`, `category.php`,
-  `listing.php`) so they look identical without duplicating a stylesheet
-  per file.
-- `partials/` — PHP includes shared by `category.php` and `listing.php`:
-  `categories.php` (category metadata), `render-helpers.php` (escaping,
-  card markup, sorting — the PHP equivalents of `index.html`'s JS helpers),
-  `header.php`, `footer.php`, `analytics.php` (Google Analytics snippet).
+  `listing.php`, `guides.php`, `guide.php`) so they look identical without
+  duplicating a stylesheet per file.
+- `partials/` — PHP includes shared by `category.php`, `listing.php`,
+  `guides.php`, and `guide.php`: `categories.php` (category metadata),
+  `guide-content.php` (guide article content), `render-helpers.php`
+  (escaping, card markup, sorting — the PHP equivalents of `index.html`'s JS
+  helpers), `header.php`, `footer.php`, `analytics.php` (Google Analytics
+  snippet).
 - `.htaccess` — rewrites pretty URLs (`/category/{slug}/`, `/listing/{id}/`,
-  `/sitemap.xml`) to the PHP scripts that actually handle them.
+  `/guides/`, `/guides/{slug}/`, `/sitemap.xml`) to the PHP scripts that
+  actually handle them.
 - `hero_estatedir1.webp` — the homepage hero image.
 - `api/` — PHP endpoints backing the listing data and contact form
   (`listings.php`, `contact.php`, `db.php`, `config.example.php`). Requires
@@ -135,6 +141,30 @@ shared templating layer across both would be a bigger rewrite than this
 project's size and traffic justify. If the two ever visibly drift (e.g. a
 badge added to one card renderer and not the other), that's the place to
 look.
+
+## Guides
+
+`/guides/` and `/guides/{slug}/` (same `.htaccess`-rewrite pattern as
+categories/listings) are free, shortened articles adapted from chapters of
+*The Family Guide to Estate Cleanouts* — the $19.97 digital download sold on
+Whop (see Payments below). There are three: sorting/categorizing an estate,
+valuing estate sale items, and a step-by-step cleanout timeline.
+
+The content is deliberately **not the PDF's text** — it's a fresh, shorter
+rewrite that leaves out the guide's actual checklists, call scripts, and
+company-screening matrix, which stay exclusive to the paid download. Each
+page ends with a `.guide-promo` CTA (the same component used on the
+homepage) whose copy is specific to what that article didn't cover, linking
+to `WHOP_GUIDE_LINK` (defined once in `partials/render-helpers.php`, kept in
+sync with `WHOP_LINKS.guide` in `index.html`'s `<script>`).
+
+Content lives in `partials/guide-content.php` as a plain PHP array (title,
+description, intro, an ordered list of heading/body sections, and the CTA
+body) rather than a database table — this is editorial content that changes
+rarely and doesn't need `/admin/` editing. Adding a fourth guide means
+adding one more entry to that array; `guides.php` and `sitemap.php` both
+pick it up automatically since they iterate over the same array rather than
+listing slugs by hand.
 
 ## Data persistence
 
