@@ -6,6 +6,10 @@ cleanup companies serving Charlotte, NC and the surrounding metro (including Roc
 Published by **Dominate Your Brand LLC**, 30 Gould St Suite R, Sheridan, WY 82801.
 Contact: Curtis Waters · info@dominatewithbrand.com · (704) 345-2964
 
+If something breaks in production, check [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
+first — it covers real issues hit deploying this exact stack (NameHero
+cPanel + Cloudflare), not just generic advice.
+
 ## What's in this repo
 
 - `index.html` — the homepage plus the SPA for About, Pricing, Contact, FAQ,
