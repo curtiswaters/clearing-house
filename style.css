@@ -204,7 +204,7 @@ nav.cats a.active{ background: var(--ink); color: var(--paper); }
 .badge.featured{ background: var(--brass); }
 .badge.sponsor{ background: var(--rust); }
 .badge.verified{ background: var(--sage); }
-.verified-check{ color: var(--sage); font-size:13px; font-weight:700; margin-left:4px; }
+.verified-check{ color: var(--sage); font-size:26px; font-weight:700; margin-left:4px; vertical-align:middle; }
 
 .listing-panel{ background: var(--card-bg); border:1px solid var(--ink); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); }
 .listing-panel .desc{ font-size:16px; line-height:1.7; color: var(--ink); margin-bottom: 22px; }
