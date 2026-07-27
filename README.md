@@ -23,7 +23,7 @@ Contact: Curtis Waters · info@dominatewithbrand.com · (704) 345-2964
 - `partials/` — PHP includes shared by `category.php` and `listing.php`:
   `categories.php` (category metadata), `render-helpers.php` (escaping,
   card markup, sorting — the PHP equivalents of `index.html`'s JS helpers),
-  `header.php`, `footer.php`.
+  `header.php`, `footer.php`, `analytics.php` (Google Analytics snippet).
 - `.htaccess` — rewrites pretty URLs (`/category/{slug}/`, `/listing/{id}/`,
   `/sitemap.xml`) to the PHP scripts that actually handle them.
 - `hero_estatedir1.webp` — the homepage hero image.
@@ -224,6 +224,15 @@ embeds business data as plain text so that content doesn't require any
 crawling or rendering to be readable. It's a manually-maintained snapshot,
 so unlike the sitemap, it will drift from the live database over time as
 listings are added or edited via `/admin/`.
+
+## Analytics
+
+Google Analytics (GA4, `gtag.js`) is wired into every public page — inline
+in `index.html`'s `<head>`, and via `partials/analytics.php` (included in
+`category.php` and `listing.php`) so the tracking snippet only needs
+updating in one PHP place if the Measurement ID ever changes. `/admin/` is
+deliberately excluded, so admin activity doesn't get mixed into visitor
+analytics.
 
 ## Known limitations to address before going live
 
