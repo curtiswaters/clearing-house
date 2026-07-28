@@ -1,7 +1,8 @@
 # The Clearing House — Charlotte Estate & Cleanout Directory
 
 A directory website listing estate sale cleanout, junk removal, and hoarding/biohazard
-cleanup companies serving Charlotte, NC and the surrounding metro (including Rock Hill, SC).
+cleanup companies serving the wider Charlotte, NC metro — Charlotte, Concord, Cornelius,
+Gastonia, Fort Mill SC, Rock Hill SC, and Indian Land SC.
 
 Published by **Dominate Your Brand LLC**, 30 Gould St Suite R, Sheridan, WY 82801.
 Contact: Curtis Waters · info@dominatewithbrand.com · (704) 345-2964
@@ -24,18 +25,21 @@ cPanel + Cloudflare), not just generic advice.
 - `guides.php` / `guide.php` — server-rendered free articles at `/guides/`
   and `/guides/{slug}/`, adapted from chapters of the paid "Family Guide to
   Estate Cleanouts" (sold on Whop). See "Guides" below.
+- `markets.php` / `market.php` — server-rendered pages at `/markets/` and
+  `/market/{slug}/` listing businesses by city/metro area rather than
+  category. See "Markets" below.
 - `style.css` — shared styles for every page (`index.html`, `category.php`,
-  `listing.php`, `guides.php`, `guide.php`) so they look identical without
-  duplicating a stylesheet per file.
-- `partials/` — PHP includes shared by `category.php`, `listing.php`,
-  `guides.php`, and `guide.php`: `categories.php` (category metadata),
+  `listing.php`, `guides.php`, `guide.php`, `markets.php`, `market.php`) so
+  they look identical without duplicating a stylesheet per file.
+- `partials/` — PHP includes shared by the server-rendered pages above:
+  `categories.php` (category metadata), `markets.php` (market metadata),
   `guide-content.php` (guide article content), `render-helpers.php`
-  (escaping, card markup, sorting — the PHP equivalents of `index.html`'s JS
-  helpers), `header.php`, `footer.php`, `analytics.php` (Google Analytics
-  snippet).
+  (escaping, card markup, sorting, market parsing — the PHP equivalents of
+  `index.html`'s JS helpers), `header.php`, `footer.php`, `analytics.php`
+  (Google Analytics snippet).
 - `.htaccess` — rewrites pretty URLs (`/category/{slug}/`, `/listing/{id}/`,
-  `/guides/`, `/guides/{slug}/`, `/sitemap.xml`) to the PHP scripts that
-  actually handle them.
+  `/guides/`, `/guides/{slug}/`, `/markets/`, `/market/{slug}/`,
+  `/sitemap.xml`) to the PHP scripts that actually handle them.
 - `hero_estatedir1.webp` — the homepage hero image.
 - `api/` — PHP endpoints backing the listing data and contact form
   (`listings.php`, `contact.php`, `db.php`, `config.example.php`). Requires
@@ -170,6 +174,42 @@ adding one more entry to that array; `guides.php` and `sitemap.php` both
 pick it up automatically since they iterate over the same array rather than
 listing slugs by hand.
 
+## Markets
+
+`/markets/` and `/market/{slug}/` list businesses by city/metro area
+instead of by category — e.g. "estate sale companies in Fort Mill, SC"
+instead of "estate sale companies" generally. There are 7: Charlotte,
+Concord, Cornelius, and Gastonia, NC, plus Fort Mill, Rock Hill, and Indian
+Land, SC.
+
+**Data model**: a business's `city` column is its single "home base" (still
+shown on cards and listing pages, unchanged), but which markets it actually
+*serves* is a separate `markets` column — a comma-separated list of market
+slugs (e.g. `charlotte-nc,concord-nc`), since a junk removal or estate sale
+company commonly covers more than one city. This is deliberately a plain
+column matched with MySQL's `FIND_IN_SET()`, not a proper many-to-many join
+table — consistent with how categories are already handled here (a
+hardcoded PHP array, not a database table), and proportionate to a
+directory this size. `partials/markets.php` holds the 7 markets' names and
+blurbs, mirrored by a `MARKETS` constant in `admin/index.php` (which only
+needs the names, not the blurbs).
+
+`/admin/` has a checkbox per market on the add/edit form for tagging which
+markets a business serves. Listing pages show a "Serves: ..." line (linking
+to each market page) whenever a business has any markets tagged, and the
+same data feeds an `areaServed` array in the listing's `LocalBusiness`
+JSON-LD.
+
+**Existing listings were seeded conservatively**: each of the original 20
+businesses was tagged with only its home city as a starting point (a
+Charlotte business got `charlotte-nc`, not additionally `concord-nc`,
+`fort-mill-sc`, etc.), rather than guessing that they also cover the newer
+markets. Expanding any business's actual coverage is a manual `/admin/`
+edit once that's confirmed. The newer markets (Concord, Fort Mill, Rock
+Hill, Indian Land) will show "No listings yet" on their market page until
+businesses serving those areas are actually added — building the pages
+doesn't create businesses to put on them.
+
 ## Data persistence
 
 Listing data, including Verified/Featured/Category Sponsor status, is
@@ -215,12 +255,13 @@ for the one required config value (`contact_from_email`).
 ## Admin panel
 
 `/admin/` is a small password-protected panel (single PHP file, no JS
-framework) for listing management: add, edit, delete, and toggle Verified,
-Featured, and Category Sponsor directly, without writing SQL. Checking
-Category Sponsor for a business is blocked with an error if another
-business in the same category already has it — see "Known limitations"
-below for why this check only exists here and not on the Whop side. The
-panel is protected by one shared password (`admin_password_hash` in `api/config.php`)
+framework) for listing management: add, edit, delete, toggle Verified,
+Featured, and Category Sponsor, and check which markets a business serves —
+all directly, without writing SQL. Checking Category Sponsor for a business
+is blocked with an error if another business in the same category already
+has it — see "Known limitations" below for why this check only exists here
+and not on the Whop side. The panel is protected by one shared password
+(`admin_password_hash` in `api/config.php`)
 plus a CSRF token on every write and a short delay after repeated failed
 logins — reasonable for a single site owner, but not meant for multiple
 admin users or a public-facing login at scale.

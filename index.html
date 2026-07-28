@@ -51,7 +51,7 @@
   <div class="footer-inner">
     <div class="footer-col" style="max-width:280px;">
       <h4>The Clearing House</h4>
-      <p style="margin:0 0 10px; line-height:1.6; color:var(--ink-soft);">A directory of estate sale cleanout, junk removal, and hoarding/biohazard companies serving Charlotte, NC and the surrounding metro, including Rock Hill, SC.</p>
+      <p style="margin:0 0 10px; line-height:1.6; color:var(--ink-soft);">A directory of estate sale cleanout, junk removal, and hoarding/biohazard companies serving the wider Charlotte metro, including Concord, Cornelius, Gastonia, Fort Mill SC, Rock Hill SC, and Indian Land SC.</p>
     </div>
     <div class="footer-col">
       <h4>Directory</h4>
@@ -59,6 +59,7 @@
       <a href="/category/junk-removal/">Junk Removal</a>
       <a href="/category/hoarding-biohazard/">Hoarding &amp; Biohazard</a>
       <a href="/guides/">Guides</a>
+      <a href="/markets/">Markets</a>
     </div>
     <div class="footer-col">
       <h4>For Businesses</h4>
@@ -241,7 +242,7 @@ function renderTopNav(){
   const infoLinks = ["about","pricing","contact","faq"].map(p => `
     <a href="#/${p}" class="${route.page===p ? 'active':''}" style="text-transform:capitalize;">${p}</a>
   `).join("");
-  el.innerHTML = catLinks + `<a href="/guides/">Guides</a><span style="width:1px; background:var(--line); margin:0 4px;"></span>` + infoLinks;
+  el.innerHTML = catLinks + `<a href="/guides/">Guides</a><a href="/markets/">Markets</a><span style="width:1px; background:var(--line); margin:0 4px;"></span>` + infoLinks;
 }
 
 function render(){

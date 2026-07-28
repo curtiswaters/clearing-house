@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 require __DIR__ . '/db.php';
 
 try {
-  $rows = $pdo->query('SELECT id, name, category, phone, city, website, oneliner, description, verified, featured, category_sponsor FROM businesses')->fetchAll();
+  $rows = $pdo->query('SELECT id, name, category, phone, city, website, oneliner, description, verified, featured, category_sponsor, markets FROM businesses')->fetchAll();
 } catch (PDOException $e) {
   http_response_code(500);
   echo json_encode(['error' => 'Database error']);

@@ -8,6 +8,7 @@ define('CH_APP', true);
 require __DIR__ . '/api/db.php';
 require __DIR__ . '/partials/render-helpers.php';
 $categories = require __DIR__ . '/partials/categories.php';
+$markets = require __DIR__ . '/partials/markets.php';
 
 $id = $_GET['id'] ?? '';
 $stmt = $pdo->prepare('SELECT * FROM businesses WHERE id = ?');
@@ -43,6 +44,11 @@ $canonical = 'https://clearinghousecharlotte.com/listing/' . $b['id'] . '/';
 $phoneDigits = preg_replace('/[^\d+]/', '', $b['phone']);
 
 [$locality, $region] = parse_city_state($b['city']);
+$servedMarketSlugs = business_markets($b);
+$servedMarketNames = array_map(function ($slug) use ($markets) {
+  return $markets[$slug]['name'] ?? $slug;
+}, $servedMarketSlugs);
+
 $localBusiness = [
   '@type' => 'LocalBusiness',
   'name' => $b['name'],
@@ -58,6 +64,11 @@ $localBusiness = [
   ],
 ];
 if ($b['website']) $localBusiness['sameAs'] = website_href($b['website']);
+if ($servedMarketNames) {
+  $localBusiness['areaServed'] = array_map(function ($name) {
+    return ['@type' => 'City', 'name' => $name];
+  }, $servedMarketNames);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,6 +122,11 @@ if ($b['website']) $localBusiness['sameAs'] = website_href($b['website']);
       <div class="contact-chip">🌐 <a href="<?= h(website_href($b['website'])) ?>" target="_blank" rel="noopener noreferrer"><?= h(website_label($b['website'])) ?></a></div>
       <?php endif; ?>
     </div>
+    <?php if ($servedMarketNames): ?>
+    <p style="font-size:14px; color:var(--ink-soft); margin:-8px 0 22px;">
+      <strong>Serves:</strong> <?php foreach ($servedMarketNames as $i => $name): ?><?= $i > 0 ? ', ' : '' ?><a href="/market/<?= h($servedMarketSlugs[$i]) ?>/" style="text-decoration:underline; color:var(--navy);"><?= h($name) ?></a><?php endforeach; ?>
+    </p>
+    <?php endif; ?>
     <div class="cta-row">
       <a class="btn" href="tel:<?= h($phoneDigits) ?>">Call <?= h($b['phone']) ?></a>
       <?php if ($b['website']): ?>

@@ -5,7 +5,7 @@ if (!defined('CH_APP')) { http_response_code(403); exit; }
   <div class="footer-inner">
     <div class="footer-col" style="max-width:280px;">
       <h4>The Clearing House</h4>
-      <p style="margin:0 0 10px; line-height:1.6; color:var(--ink-soft);">A directory of estate sale cleanout, junk removal, and hoarding/biohazard companies serving Charlotte, NC and the surrounding metro, including Rock Hill, SC.</p>
+      <p style="margin:0 0 10px; line-height:1.6; color:var(--ink-soft);">A directory of estate sale cleanout, junk removal, and hoarding/biohazard companies serving the wider Charlotte metro, including Concord, Cornelius, Gastonia, Fort Mill SC, Rock Hill SC, and Indian Land SC.</p>
     </div>
     <div class="footer-col">
       <h4>Directory</h4>
@@ -13,6 +13,7 @@ if (!defined('CH_APP')) { http_response_code(403); exit; }
       <a href="/category/junk-removal/">Junk Removal</a>
       <a href="/category/hoarding-biohazard/">Hoarding &amp; Biohazard</a>
       <a href="/guides/">Guides</a>
+      <a href="/markets/">Markets</a>
     </div>
     <div class="footer-col">
       <h4>For Businesses</h4>

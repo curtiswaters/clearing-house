@@ -16,6 +16,18 @@ const CATEGORIES = [
   'hoarding-biohazard' => 'Hoarding & Biohazard Cleanup',
 ];
 
+// Kept in sync with partials/markets.php (that file also carries each
+// market's blurb, which this admin panel doesn't need).
+const MARKETS = [
+  'charlotte-nc' => 'Charlotte, NC',
+  'concord-nc' => 'Concord, NC',
+  'cornelius-nc' => 'Cornelius, NC',
+  'gastonia-nc' => 'Gastonia, NC',
+  'fort-mill-sc' => 'Fort Mill, SC',
+  'rock-hill-sc' => 'Rock Hill, SC',
+  'indian-land-sc' => 'Indian Land, SC',
+];
+
 function csrfToken(): string {
   if (empty($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(32));
   return $_SESSION['csrf'];
@@ -84,6 +96,7 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '')
       $verified = isset($_POST['verified']) ? 1 : 0;
       $featured = isset($_POST['featured']) ? 1 : 0;
       $categorySponsor = isset($_POST['category_sponsor']) ? 1 : 0;
+      $markets = implode(',', array_intersect((array) ($_POST['markets'] ?? []), array_keys(MARKETS)));
 
       if (!preg_match('/^[a-z0-9-]+$/', $id)) {
         $error = 'ID must be lowercase letters, numbers, and hyphens only.';
@@ -93,11 +106,11 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '')
         $error = 'Another business already sponsors this category. Remove their sponsorship first.';
       } else {
         if ($isNew) {
-          $stmt = $pdo->prepare('INSERT INTO businesses (id, name, category, phone, city, website, oneliner, description, verified, featured, category_sponsor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-          $stmt->execute([$id, $name, $category, $phone, $city, $website, $oneliner, $description, $verified, $featured, $categorySponsor]);
+          $stmt = $pdo->prepare('INSERT INTO businesses (id, name, category, phone, city, website, oneliner, description, verified, featured, category_sponsor, markets) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+          $stmt->execute([$id, $name, $category, $phone, $city, $website, $oneliner, $description, $verified, $featured, $categorySponsor, $markets]);
         } else {
-          $stmt = $pdo->prepare('UPDATE businesses SET name=?, category=?, phone=?, city=?, website=?, oneliner=?, description=?, verified=?, featured=?, category_sponsor=? WHERE id=?');
-          $stmt->execute([$name, $category, $phone, $city, $website, $oneliner, $description, $verified, $featured, $categorySponsor, $id]);
+          $stmt = $pdo->prepare('UPDATE businesses SET name=?, category=?, phone=?, city=?, website=?, oneliner=?, description=?, verified=?, featured=?, category_sponsor=?, markets=? WHERE id=?');
+          $stmt->execute([$name, $category, $phone, $city, $website, $oneliner, $description, $verified, $featured, $categorySponsor, $markets, $id]);
         }
         header('Location: index.php');
         exit;
@@ -207,6 +220,12 @@ $businesses = $authed ? $pdo->query('SELECT * FROM businesses ORDER BY category,
     <label><input type="checkbox" name="featured" <?= !empty($editing['featured']) ? 'checked' : '' ?> style="width:auto;"> Featured (+$49/mo, expects Verified)</label>
     <label><input type="checkbox" name="category_sponsor" <?= !empty($editing['category_sponsor']) ? 'checked' : '' ?> style="width:auto;"> Category Sponsor ($250/mo, 1 per category)</label>
 
+    <?php $editingMarkets = explode(',', $editing['markets'] ?? ''); ?>
+    <label>Markets served</label>
+    <?php foreach (MARKETS as $key => $label): ?>
+      <label><input type="checkbox" name="markets[]" value="<?= h($key) ?>" <?= in_array($key, $editingMarkets, true) ? 'checked' : '' ?> style="width:auto;"> <?= h($label) ?></label>
+    <?php endforeach; ?>
+
     <p>
       <button class="btn" type="submit">Save</button>
       <a href="index.php" class="btn link">Cancel</a>
@@ -224,12 +243,13 @@ $businesses = $authed ? $pdo->query('SELECT * FROM businesses ORDER BY category,
   </div>
 
   <table>
-    <tr><th>Name</th><th>Category</th><th>City</th><th>Website</th><th>Status</th><th></th></tr>
+    <tr><th>Name</th><th>Category</th><th>City</th><th>Markets</th><th>Website</th><th>Status</th><th></th></tr>
     <?php foreach ($businesses as $b): ?>
       <tr>
         <td><?= h($b['name']) ?></td>
         <td><?= h(CATEGORIES[$b['category']] ?? $b['category']) ?></td>
         <td><?= h($b['city']) ?></td>
+        <td style="font-size:12px;"><?= h(implode(', ', array_map(function ($slug) { return MARKETS[$slug] ?? $slug; }, array_filter(explode(',', $b['markets'] ?? ''))))) ?: '—' ?></td>
         <td><?= $b['website'] ? '<a href="' . h((preg_match('/^https?:\/\//i', $b['website']) ? '' : 'https://') . $b['website']) . '" target="_blank" rel="noopener noreferrer">' . h($b['website']) . '</a>' : '—' ?></td>
         <td>
           <?php if ($b['category_sponsor']): ?><span class="status-badge sponsor">Sponsor</span><?php endif; ?>

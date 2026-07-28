@@ -35,6 +35,10 @@ function parse_city_state(string $cityStr): array {
   return [$parts[0] ?? '', $parts[1] ?? ''];
 }
 
+function business_markets(array $b): array {
+  return array_values(array_filter(array_map('trim', explode(',', $b['markets'] ?? ''))));
+}
+
 function sort_for_display(array $list): array {
   usort($list, function ($a, $b) {
     if ($a['category_sponsor'] && !$b['category_sponsor']) return -1;

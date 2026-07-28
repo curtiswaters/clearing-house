@@ -1,17 +1,19 @@
 <?php
 /**
  * Dynamic sitemap, served at /sitemap.xml via .htaccess rewrite. Lists the
- * homepage, every category, every business listing, and every guide —
- * regenerated on each request from the businesses table (and the guide
- * content file), so it never goes stale like a hand-maintained file would.
+ * homepage, every category, every market, every business listing, and
+ * every guide — regenerated on each request from the businesses table (and
+ * the guide/market content files), so it never goes stale like a
+ * hand-maintained file would.
  */
 define('CH_APP', true);
 header('Content-Type: application/xml; charset=UTF-8');
 require __DIR__ . '/api/db.php';
 $guides = require __DIR__ . '/partials/guide-content.php';
+$markets = require __DIR__ . '/partials/markets.php';
 
 $siteUrl = 'https://clearinghousecharlotte.com/';
-$urls = [$siteUrl, $siteUrl . 'guides/'];
+$urls = [$siteUrl, $siteUrl . 'guides/', $siteUrl . 'markets/'];
 
 foreach (['estate-sale', 'junk-removal', 'hoarding-biohazard'] as $slug) {
   $urls[] = $siteUrl . 'category/' . $slug . '/';
@@ -19,6 +21,10 @@ foreach (['estate-sale', 'junk-removal', 'hoarding-biohazard'] as $slug) {
 
 foreach (array_keys($guides) as $slug) {
   $urls[] = $siteUrl . 'guides/' . $slug . '/';
+}
+
+foreach (array_keys($markets) as $slug) {
+  $urls[] = $siteUrl . 'market/' . $slug . '/';
 }
 
 $rows = $pdo->query('SELECT id FROM businesses')->fetchAll();
